@@ -1,8 +1,17 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import Intro from './pages/Intro';
+import './App.module.scss';
 
 function App() {
-  return <div className="App">asdf</div>;
+  return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Intro />} />
+        </Routes>
+      </BrowserRouter>
+  );
 }
 
 export default App;
