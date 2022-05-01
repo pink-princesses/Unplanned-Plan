@@ -1,21 +1,28 @@
 module.exports = {
-  parser: "@typescript-eslint/parser", // Specifies the ESLint parser
+  env: {
+    browser: true,
+    commonjs: true,
+  },
   extends: [
-    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
-    "plugin:@typescript-eslint/recommended" // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: "module", // Allows for the use of imports
     ecmaFeatures: {
-      jsx: true // Allows for the parsing of JSX
-    }
+      jsx: true,
+    },
+    ecmaVersion: 2018,
+    sourceType: 'module',
   },
+  plugins: ['react', '@typescript-eslint'],
   rules: {
+    /** 함수의 명시적 타입 리턴을 명시적으로 써주지 않아도 되도록 하는 옵션. 이건 off 하는게 맞을까? */
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'no-unused-vars': 'off',
   },
-  settings: {
-    react: {
-      version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
-    }
-  }
 };

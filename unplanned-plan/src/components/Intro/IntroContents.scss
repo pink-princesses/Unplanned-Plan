@@ -1,0 +1,33 @@
+.Intro__wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	.google{
+		width: 197px;
+		height: 46px;
+		background-image: url('../../../public/google_normal.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+		&:active {
+			background-image: url('../../../public/google_active.png');
+		}
+	}
+
+	.apple {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 191px;
+		height: 44px;
+		font-size: 14px;
+		color: #fff;
+		box-sizing: border-box;
+		background-color: #000;
+		border-radius: 3px;
+		> p {
+			margin-right: 10px;
+		}
+	}
+}
