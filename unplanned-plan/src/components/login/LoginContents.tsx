@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import './IntroContents.scss';
+import './LoginContents.scss';
 
 export default function IntroContents() {
   const navigate = useNavigate();
