@@ -1,7 +1,7 @@
-import IntroContents from '../components/login/LoginContents';
+import IntroContents from '../components/intro/IntroContents';
 import Inner from '../components/common/Inner';
 
-export default function Login() {
+export default function Intro() {
   return (
     <Inner>
       <IntroContents />

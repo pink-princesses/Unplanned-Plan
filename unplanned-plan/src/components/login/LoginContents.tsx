@@ -2,19 +2,19 @@ import { useNavigate } from 'react-router-dom';
 
 import './LoginContents.scss';
 
-export default function IntroContents() {
+export default function LoginContents() {
   const navigate = useNavigate();
 
   const goPersonalSettings = () => navigate('/personalSettings');
   return (
-    <div className="Intro__wrapper">
-      <p className="Intro__logo">😎</p>
-      <p className="Intro__title">Unplanded Plan!</p>
+    <div className="Login__wrapper">
+      <p className="Login__logo">😎</p>
+      <p className="Login__title">Sign in Unplanded Plan!</p>
       <button
-        className="Intro__googleBtn"
+        className="Login__googleBtn"
         onClick={goPersonalSettings}
       ></button>
-      <button className="Intro__appleBtn" onClick={goPersonalSettings}>
+      <button className="Login__appleBtn" onClick={goPersonalSettings}>
         <img src="apple_logo.png" alt="" />
         <p>Continue with Apple</p>
       </button>
