@@ -6,11 +6,11 @@ import './App.module.scss';
 
 function App() {
   return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Intro />} />
-        </Routes>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Intro />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
