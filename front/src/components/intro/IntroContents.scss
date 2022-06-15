@@ -20,6 +20,9 @@
 	}
 	
 	.Intro__contents {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		margin-top: 40px;
 		.Intro__content {
 			font-size: 20px;
@@ -32,6 +35,33 @@
 		background-color: gray;
 		&:active {
 			transform: scale(.98);
+		}
+	}
+
+	.Login__googleBtn{
+		width: 197px;
+		height: 46px;
+		background-image: url('../../../public/google_normal.png');
+		background-repeat: no-repeat;
+		background-size: cover;
+		&:active {
+			background-image: url('../../../public/google_active.png');
+		}
+	}
+
+	.Login__appleBtn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 191px;
+		height: 44px;
+		font-size: 14px;
+		color: #fff;
+		box-sizing: border-box;
+		background-color: #000;
+		border-radius: 3px;
+		> p {
+			margin-right: 10px;
 		}
 	}
 }

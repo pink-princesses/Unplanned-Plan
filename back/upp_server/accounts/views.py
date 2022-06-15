@@ -42,4 +42,4 @@ def google_login(request):
 
 		params = urlencode({'jwt': jwt_token, 'refresh': refresh_token})
 
-		return HttpResponseRedirect(f'http://localhost:3000?{params}')
+		return HttpResponseRedirect(f'http://localhost:3000/login?{params}')
