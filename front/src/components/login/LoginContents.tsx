@@ -1,23 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './LoginContents.scss';
 
 export default function LoginContents() {
   const navigate = useNavigate();
+  const search = useLocation().search;
 
-  const goPersonalSettings = () => navigate('/personalSettings');
-  return (
-    <div className="Login__wrapper">
-      <p className="Login__logo">😎</p>
-      <p className="Login__title">Sign in Unplanded Plan!</p>
-      <button
-        className="Login__googleBtn"
-        onClick={goPersonalSettings}
-      ></button>
-      <button className="Login__appleBtn" onClick={goPersonalSettings}>
-        <img src="apple_logo.png" alt="" />
-        <p>Continue with Apple</p>
-      </button>
-    </div>
-  );
+  useEffect(() => {
+    const params = new URLSearchParams(search);
+    const jwt = params.get('jwt');
+    const refresh = params.get('refresh');
+
+    if (jwt && refresh) {
+      localStorage.setItem('jwt', jwt);
+      localStorage.setItem('refresh', refresh);
+
+      navigate('/personalSettings');
+    } else {
+      alert('로그인 할 수 없습니다.');
+      navigate('/');
+    }
+  }, []);
+
+  return <></>;
 }

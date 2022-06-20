@@ -1,9 +1,9 @@
 from pathlib import Path
-from .env import SECRET_KEY, DATABASES
+import env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = SECRET_KEY
+SECRET_KEY = env.SECRET_KEY
 
 DEBUG = True
 
@@ -12,7 +12,7 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = [
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,7 +51,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'upp_server.wsgi.application'
 
-DATABASES = DATABASES
+DATABASES = env.DATABASES
 
 AUTH_PASSWORD_VALIDATORS = [
     {
