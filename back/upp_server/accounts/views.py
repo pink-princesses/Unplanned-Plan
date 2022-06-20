@@ -1,10 +1,14 @@
+# pakages
 import jwt
-
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
-from datetime import datetime, timedelta
-from .functions import google_get_access_token, google_get_user_info
+
+# modules
+import env
+from .functions import *
+from messages import AM000, AM005
+from utils import generate_expiration_date, make_json_response, check_token_in_header
 
 # Create your views here.
 def google_login(request):
@@ -30,16 +34,50 @@ def google_login(request):
 				'type': 'jwt',
 				'name': user_name, 
 				'email': user_email, 
-				'expiration_time': int((datetime.now() + timedelta(days=1)).timestamp())
-		}, 'test_private_key', algorithm='HS256')
+				'expiration_time': generate_expiration_date(1)
+		}, env.JWT_PRIVATE_KEY, algorithm=env.ALGORITHM)
 
 		refresh_token = jwt.encode({
 				'type': 'refresh',
 				'name': user_name, 
 				'email': user_email, 
-				'expiration_time': int((datetime.now() + timedelta(days=30)).timestamp())
-		}, 'test_private_key', algorithm='HS256')
+				'expiration_time': generate_expiration_date(30)
+		}, env.JWT_PRIVATE_KEY, algorithm=env.ALGORITHM)
 
 		params = urlencode({'jwt': jwt_token, 'refresh': refresh_token})
 
 		return HttpResponseRedirect(f'http://localhost:3000/login?{params}')
+
+
+def refresh_login_status(request):
+		token = request.headers.get('refresh')
+		result = check_token_in_header(token)
+
+		if result.get('status'):
+				return make_json_response({'data': result})
+		else:
+				return make_json_response({'data': result}, code=401)
+
+
+def get_user_info(request):
+		token = request.headers.get('jwt')
+		result = check_token_in_header(token)
+
+		if type(result) == int or result.get('status'):
+				User = get_user_model()
+				try:
+						user = User.objects.get(pk=result)
+						user_data = {
+							'userName': user.name,
+							'nickName': user.nickname,
+						}
+						response = AM000
+						response['userData'] = user_data
+
+						return make_json_response({'data': response})
+				except:
+						return make_json_response({'data': AM005}, 401)
+		else:
+				return make_json_response({'data': result}, 401)
+
+
