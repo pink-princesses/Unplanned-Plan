@@ -1,11 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import './IntroContents.scss';
 import IntroConffeti from './IntroConffeti';
+import { useNavigate } from 'react-router-dom';
 
 export default function IntroContents() {
+  const navigate = useNavigate();
+
   const openGoogleLoginPage = useCallback(() => {
-    console.log('login');
     const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     const redirectUri = 'api/v1/auth/login/google/';
 
@@ -28,6 +30,10 @@ export default function IntroContents() {
 
     window.location = `${googleAuthUrl}?${urlParams}` as (string | Location) &
       Location;
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('jwt')) navigate('/calander');
   }, []);
 
   return (

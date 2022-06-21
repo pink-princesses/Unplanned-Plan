@@ -16,7 +16,7 @@ export default function LoginContents() {
       localStorage.setItem('jwt', jwt);
       localStorage.setItem('refresh', refresh);
 
-      navigate('/personalSettings');
+      navigate('/calander');
     } else {
       alert('로그인 할 수 없습니다.');
       navigate('/');
