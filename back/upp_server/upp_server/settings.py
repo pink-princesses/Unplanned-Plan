@@ -12,6 +12,9 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'accounts.User'
 
 INSTALLED_APPS = [
+    # localApps
+    'todos',
+    # djangoApps
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -76,3 +76,20 @@
     color: rgba(0, 0, 0, 0.4);
   }
 }
+
+.togle_todo_btn {
+  position: absolute;
+  top: 40%;
+  right: 30px;
+  width: 4rem;
+  height: 4rem;
+  background-color: aqua;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: hide;
+}

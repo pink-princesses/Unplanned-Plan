@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 function CalanderHeader({ year, month }) {
+  const [displayMonth, setDiaplayMonth] = useState('오늘');
+
   return (
     <div className="calander__header">
       <h1 className="calander__header__title">
@@ -8,7 +10,9 @@ function CalanderHeader({ year, month }) {
       </h1>
       <div className="calander__header__btn__wrapper">
         <button className="calander__header__btn btn__prev">&lt;</button>
-        <button className="calander__header__btn btn__center">오늘</button>
+        <button className="calander__header__btn btn__center">
+          {displayMonth}
+        </button>
         <button className="calander__header__btn btn__next">&gt;</button>
       </div>
     </div>
