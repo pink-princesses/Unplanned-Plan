@@ -1,5 +1,10 @@
-import env
+# pakages
 import requests
+from django.forms import ValidationError
+
+# modules
+import env
+
 
 def google_get_access_token(code: str):
 		data = {
@@ -19,6 +24,7 @@ def google_get_access_token(code: str):
 
 		return access_token
 
+
 def google_get_user_info(access_token: str):
 		response = requests.get(
 				'https://www.googleapis.com/oauth2/v3/userinfo',
@@ -29,3 +35,4 @@ def google_get_user_info(access_token: str):
 				raise ValidationError('Failed to obtain user info from Google.')
 
 		return response.json()
+
