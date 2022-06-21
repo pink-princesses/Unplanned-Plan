@@ -3,6 +3,8 @@ import jwt
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect
 from django.contrib.auth import get_user_model
+from django.views.decorators.http import require_http_methods
+
 
 # modules
 import env
@@ -49,6 +51,7 @@ def google_login(request):
 		return HttpResponseRedirect(f'http://localhost:3000/login?{params}')
 
 
+@require_http_methods(["POST"])
 def refresh_login_status(request):
 		token = request.headers.get('refresh')
 		result = check_token_in_header(token)
@@ -59,6 +62,7 @@ def refresh_login_status(request):
 				return make_json_response({'data': result}, code=401)
 
 
+@require_http_methods(["GET", "POST"])
 def get_user_info(request):
 		token = request.headers.get('jwt')
 		result = check_token_in_header(token)
