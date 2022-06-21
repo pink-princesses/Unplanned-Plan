@@ -4,6 +4,7 @@
   "private": true,
   "main": "public/Main.js",
   "homepage": "./",
+  "proxy": "http://localhost:8000",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
