@@ -11,9 +11,12 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'accounts.User'
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 INSTALLED_APPS = [
     # localApps
     'todos',
+    'corsheaders',
     # djangoApps
     'accounts.apps.AccountsConfig',
     'django.contrib.admin',
@@ -25,6 +28,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
