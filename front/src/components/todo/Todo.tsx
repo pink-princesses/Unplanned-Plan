@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { getAllTodos, createTodo } from '../../api/requests';
 import './Todo.scss';
+import TodoContent from './TodoContent';
 
 function Todo(props: any) {
-  const [todos, setTodos] = useState('');
+  const [todos, setTodos] = useState([]);
   const [content, setContnet] = useState('');
   const [checkDone, setCheckDone] = useState(false);
 
   useEffect(() => {
     try {
       getAllTodos().then((data) => {
-        console.log(data);
+        console.log(data.data, '투두');
+        setTodos(data.data);
       });
     } catch (e) {
       console.log(e, '에러');
@@ -36,7 +38,7 @@ function Todo(props: any) {
   };
 
   return (
-    <div>
+    <div className="todos__container">
       <input
         placeholder="todo를 입력하세요"
         onChange={(e) => handleContent(e)}
@@ -48,13 +50,15 @@ function Todo(props: any) {
         onChange={handleCheckbox}
       />
       <label htmlFor="done__Checkbox">완료</label>
-      <br />
-      <button onClick={handleSubmit}>작성완료</button>
-      <h3>4/13 todoHeader</h3>
-      <div>{todos}</div>
-      <p>todoContent</p>
-      <p>todoContent</p>
-      <p>todoContent</p>
+      <button onClick={handleSubmit} className="submit__btn">
+        작성완료
+      </button>
+      <h1 className="todos__header">4/13</h1>
+      <div>
+        {todos
+          ? todos.map((todo) => <TodoContent todo={todo} key={todo} />)
+          : '로딩불가'}
+      </div>
     </div>
   );
 }
