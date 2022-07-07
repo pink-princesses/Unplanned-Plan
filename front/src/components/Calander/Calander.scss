@@ -1,6 +1,11 @@
 .calander {
   padding: 60px;
   box-sizing: border-box;
+  display: flex;
+}
+.calander__container {
+  width: 100%;
+  transition-duration: 2s;
 
   .calander__header {
     display: flex;

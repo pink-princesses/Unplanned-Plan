@@ -7,6 +7,7 @@ const createAxiosInstance = () => {
     baseURL: BASE_URL,
     headers: {
       'Content-type': 'application/json',
+      // 'Access-Control-Allow-Credentials': true,
     },
   });
 

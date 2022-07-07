@@ -40,8 +40,8 @@ function CalanderContents({ currentDate }) {
   return (
     <>
       <div className="calander__dayOfWeek__wrapper">
-        {dayOftheWeek.map((dow) => (
-          <CalanderDOW dayOfWeek={dow} key={dow} />
+        {dayOftheWeek.map((dow, idx) => (
+          <CalanderDOW dayOfWeek={dow} key={dow + idx} />
         ))}
       </div>
       <div className="calander__days__wrapper">

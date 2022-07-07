@@ -16,8 +16,8 @@ function Calander() {
   }, []);
 
   return (
-    <>
-      <div className="calander">
+    <div className="calander">
+      <div className="calander__container">
         <CalanderHeader year={year} month={month} />
         <CalanderContents currentDate={currentDate} />
         <div
@@ -26,13 +26,13 @@ function Calander() {
             setIsActive(!isActive);
           }}
         >
-          투두열어
+          {isActive ? '투두닫어' : '투두열어'}
         </div>
       </div>
       <div className={isActive ? '' : 'hide'}>
         <Todo />
       </div>
-    </>
+    </div>
   );
 }
 
