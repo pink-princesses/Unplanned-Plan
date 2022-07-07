@@ -7,4 +7,9 @@ async function getAllTodos() {
   return await api.get('todos');
 }
 
-export { getAllTodos };
+// todo 작성
+async function createTodo(content, done = false) {
+  return await api.post('todos/create', { content: content, done: done });
+}
+
+export { getAllTodos, createTodo };
