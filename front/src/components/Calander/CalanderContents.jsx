@@ -41,12 +41,12 @@ function CalanderContents({ currentDate }) {
     <>
       <div className="calander__dayOfWeek__wrapper">
         {dayOftheWeek.map((dow, idx) => (
-          <CalanderDOW dayOfWeek={dow} key={dow + idx} />
+          <CalanderDOW dayOfWeek={dow} key={idx} />
         ))}
       </div>
       <div className="calander__days__wrapper">
         {calanderDays.map((day, idx) => (
-          <CalanderDay day={day} key={day + idx} />
+          <CalanderDay day={day} key={idx} />
         ))}
       </div>
     </>

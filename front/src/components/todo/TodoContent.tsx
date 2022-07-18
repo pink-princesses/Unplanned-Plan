@@ -8,15 +8,17 @@ function TodoContent(props: any) {
   const handleDone = () => {
     // TODO : api 통신으로 toggle done
     try {
-      updateTodo(props.todo.id, todoContent, !todoDone);
-      props.refresh();
+      updateTodo(props.todo.id, todoContent, !todoDone).then(() => {
+        props.refresh();
+      });
     } catch (e) {
       console.log(e, 'handleDone ERROR!!!');
     }
   };
 
   useEffect(() => {
-    // setTodoDone(props.todo.done)
+    setTodoContent(props.todo.content);
+    setTodoDone(props.todo.done);
   }, []);
 
   return (
@@ -27,7 +29,7 @@ function TodoContent(props: any) {
       </span>
       <div className="todo__container">
         <div
-          className={todoDone ? 'todo__content done' : 'todo__content'}
+          className={props.todo.done ? 'todo__content done' : 'todo__content'}
           onClick={handleDone}
         >
           {todoContent}
