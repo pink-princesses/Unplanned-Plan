@@ -6,20 +6,18 @@ function TodoContent(props: any) {
   const [todoDone, setTodoDone] = useState(props.todo.done);
 
   const handleDone = () => {
-    // TODO : api 통신으로 toggle done
     try {
-      updateTodo(props.todo.id, todoContent, !todoDone).then(() => {
-        props.refresh();
-      });
+      updateTodo(props.todo.id, todoContent, !todoDone)
+        .then(() => {
+          setTodoDone(!todoDone);
+        })
+        .then(() => {
+          props.refresh();
+        });
     } catch (e) {
       console.log(e, 'handleDone ERROR!!!');
     }
   };
-
-  useEffect(() => {
-    setTodoContent(props.todo.content);
-    setTodoDone(props.todo.done);
-  }, []);
 
   return (
     <>
