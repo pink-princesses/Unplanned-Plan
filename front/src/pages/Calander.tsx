@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CalanderContents from '../components/Calander/CalanderContents';
-import CalanderHeader from '../components/Calander/CalanderHeader';
-import '../components/Calander/Calander.scss';
+import CalanderContents from '../components/calander/CalanderContents';
+import CalanderHeader from '../components/calander/CalanderHeader';
+import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
 
 function Calander() {
