@@ -16,7 +16,7 @@ from .serializers import TodoSerializer
 @api_view(['GET'])
 def index(request):
   token = request.headers.get('Authorization')
-  if token:
+  if token != 'null':
     userInfo = check_token_in_header(token)
     todos = Todo.objects.filter(user_id=userInfo).order_by('-pk')
     serializer = TodoSerializer(todos, many=True)
@@ -24,12 +24,13 @@ def index(request):
       'todos' : todos
     }
     return Response(serializer.data)
-  return Response({'Unautorized': '유저 정보가 존재하지 않습니다.'}, status=status.HTTP_403_FORBIDDEN)
+  return make_json_response({'data': TM000}, 403)
+  # return Response({'Unautorized': '유저 정보가 존재하지 않습니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['POST'])
 def create(request):
   token = request.headers.get('Authorization')
-  if token:
+  if token != 'null':
     serializer = TodoSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
       serializer.save()
@@ -39,7 +40,7 @@ def create(request):
 @api_view(['GET'])
 def detail(request, todo_pk):
   token = request.headers.get('Authorization')
-  if token:
+  if token != 'null':
     todo = Todo.objects.get(pk=todo_pk)
     serializer = TodoSerializer(todo, data=request.data)
     context = {
