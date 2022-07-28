@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import CalanderContents from '../components/Calander/CalanderContents';
-import CalanderHeader from '../components/Calander/CalanderHeader';
-import '../components/Calander/Calander.scss';
+import CalanderContents from '../components/calander/CalanderContents';
+import CalanderHeader from '../components/calander/CalanderHeader';
+import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
 
 function Calander() {
@@ -15,11 +15,19 @@ function Calander() {
     setMonth(currentDate.getMonth() + 1);
   }, []);
 
+  const changeCalander = (dir: string) => {
+    console.log(dir, 'changeCalander');
+  };
+
   return (
     <div className="calander">
       <div className="calander__container">
-        <CalanderHeader year={year} month={month} />
-        <CalanderContents currentDate={currentDate} />
+        <CalanderHeader
+          year={year}
+          month={month}
+          changeCalander={changeCalander}
+        />
+        <CalanderContents year={year} month={month} currentDate={currentDate} />
         <div
           className="togle_todo_btn"
           onClick={() => {

@@ -5,21 +5,31 @@
   display: none;
 }
 .done {
+  color: blue;
   text-decoration: line-through;
 }
 
 .todos__container {
   border: 1px solid red;
   margin-left: 30px;
+  height: 100%;
 
   .todos__header {
-    font-size: 2rem;
+    font-size: 1rem;
     font-weight: 800;
   }
 
   .todo__container {
     // background-color: gray;
     margin-bottom: 10px;
+    cursor: default;
+  }
+
+  .todo__content {
+    cursor: pointer;
+  }
+  .todo__content:hover {
+    background-color: yellowgreen;
   }
 
   .submit__btn {

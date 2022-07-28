@@ -19,6 +19,12 @@ function Todo(props: any) {
     }
   }, []);
 
+  const handleRefresh = () => {
+    getAllTodos().then((data) => {
+      setTodos(data.data);
+    });
+  };
+
   const handleContent = (e: any) => {
     setContnet(e.target.value);
   };
@@ -53,10 +59,11 @@ function Todo(props: any) {
       <button onClick={handleSubmit} className="submit__btn">
         작성완료
       </button>
-      <h1 className="todos__header">4/13</h1>
       <div>
         {todos
-          ? todos.map((todo) => <TodoContent todo={todo} key={todo} />)
+          ? todos.map((todo: any) => (
+              <TodoContent todo={todo} key={todo.id} refresh={handleRefresh} />
+            ))
           : '로딩불가'}
       </div>
     </div>

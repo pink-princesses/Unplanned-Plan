@@ -3,7 +3,7 @@ import CalanderDOW from './CalanderDOW';
 import CalanderDay from './CalanderDay';
 import './Calander.scss';
 
-function CalanderContents({ currentDate }) {
+function CalanderContents({ year, month, currentDate }) {
   const dayOftheWeek = ['일', '월', '화', '수', '목', '금', '토'];
   const [calanderDays, setCalanderDays] = useState([]);
 
@@ -41,12 +41,12 @@ function CalanderContents({ currentDate }) {
     <>
       <div className="calander__dayOfWeek__wrapper">
         {dayOftheWeek.map((dow, idx) => (
-          <CalanderDOW dayOfWeek={dow} key={dow + idx} />
+          <CalanderDOW dayOfWeek={dow} key={idx} />
         ))}
       </div>
       <div className="calander__days__wrapper">
         {calanderDays.map((day, idx) => (
-          <CalanderDay day={day} key={day + idx} />
+          <CalanderDay year={year} month={month} day={day} key={idx} />
         ))}
       </div>
     </>
