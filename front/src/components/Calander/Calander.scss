@@ -98,15 +98,16 @@
     justify-content: space-between;
     margin-bottom: 6px;
   }
-  .calander__days__btm {
+  .calander__days__btn {
     display: flex;
     flex-direction: column;
   }
-  .calander__days__btm span {
+  .calander__days__btn div {
     margin: 4px 0;
     border-radius: 4px;
     padding: 4px 6px;
     background-color: aqua;
+    text-align: left;
   }
 
   .calander__addbtn {

@@ -20,10 +20,12 @@ function TodoContent(props: any) {
   };
 
   return (
-    <>
-      <div>{props.todo.id}</div>
+    <div className="todos__contents">
       <span className="todos__header">
-        {props.todo.created_at.slice(0, 19)}
+        {`${props.todo.created_at.slice(0, 10)} ${props.todo.created_at.slice(
+          11,
+          19,
+        )}`}
       </span>
       <div className="todo__container">
         <div
@@ -32,9 +34,13 @@ function TodoContent(props: any) {
         >
           {todoContent}
         </div>
-        <p>{props.todo.updated_at.slice(0, 19)}</p>
+        <p>{props.todo.date}</p>
+        <p>{`${props.todo.updated_at.slice(
+          0,
+          10,
+        )} ${props.todo.updated_at.slice(11, 19)}`}</p>
       </div>
-    </>
+    </div>
   );
 }
 

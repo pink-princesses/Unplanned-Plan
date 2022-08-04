@@ -10,11 +10,21 @@ import PersonalSettings from './pages/PersonalSettings';
 
 type initialValueType = {
   todoState: boolean;
+  todoDate: todoDateType;
+  openTodoState: any;
   toggleTodoState: any;
+};
+
+type todoDateType = {
+  year: number;
+  month: number;
+  day: number;
 };
 
 const initialValue: initialValueType = {
   todoState: false,
+  todoDate: { year: 0, month: 0, day: 0 },
+  openTodoState: () => null,
   toggleTodoState: () => null,
 };
 
@@ -22,6 +32,14 @@ export const ContextApi = createContext(initialValue);
 
 function App() {
   const [todoState, settodoState] = useState(false);
+  const [todoDate, setTodoDate] = useState(initialValue.todoDate);
+  const openTodoState = (date: todoDateType) => {
+    console.log(date, '오픈투두스테이트');
+    setTodoDate(date);
+    settodoState(() => {
+      return true;
+    });
+  };
   const toggleTodoState = () => {
     settodoState((prev) => {
       return !prev;
@@ -29,6 +47,8 @@ function App() {
   };
   const contextValue = {
     todoState: todoState,
+    todoDate: todoDate,
+    openTodoState: openTodoState,
     toggleTodoState: toggleTodoState,
   };
 
