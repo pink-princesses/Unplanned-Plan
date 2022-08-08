@@ -16,9 +16,10 @@ from .serializers import TodoSerializer
 @api_view(['GET'])
 def index(request):
   token = request.headers.get('Authorization')
-  if token != 'null':
+  date = request.GET['date']
+  if token != 'null' and date != 'null':
     userInfo = check_token_in_header(token)
-    todos = Todo.objects.filter(user_id=userInfo).order_by('-pk')
+    todos = Todo.objects.filter(user_id=userInfo, date=date)
     serializer = TodoSerializer(todos, many=True)
     return Response(serializer.data)
   return make_json_response({'message': TM002}, 403)
