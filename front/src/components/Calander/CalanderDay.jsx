@@ -8,6 +8,7 @@ function CalanderDay({ year, month, day }) {
   const [todos, setTodos] = useState([]);
   const TODAY = new Date().getDate();
   const { openTodoState } = useContext(ContextApi);
+  const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 
   useEffect(() => {
     getTodos({ year, month, day }).then((data) => {
@@ -18,7 +19,18 @@ function CalanderDay({ year, month, day }) {
   return (
     <div className="calander__days">
       <div className="calander__days__top">
-        <span className={TODAY === day ? 'day__highlight' : null}>{day}</span>
+        <div>
+          <span className={TODAY === day ? 'day__highlight' : null}>{day}</span>
+          <span className="day__status">
+            {todos.length > 10
+              ? dayStatus[2]
+              : 10 > todos.length >= 7
+              ? dayStatus[1]
+              : todos.length > 3
+              ? dayStatus[0]
+              : ''}
+          </span>
+        </div>
         <span
           className="calander__addbtn"
           onClick={() => {

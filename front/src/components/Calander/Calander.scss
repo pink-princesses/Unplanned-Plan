@@ -97,6 +97,17 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 6px;
+
+    .day__highlight {
+      box-sizing: border-box;
+      color: #fff;
+      background-color: red;
+      // border-radius: 100%;
+      // padding: 2px 4px;
+    }
+    .day__status {
+      margin-left: 5px;
+    }
   }
   .calander__days__btn {
     display: flex;
@@ -126,12 +137,4 @@
   width: 4rem;
   height: 4rem;
   background-color: aqua;
-}
-
-.day__highlight {
-  box-sizing: border-box;
-  color: #fff;
-  background-color: red;
-  // border-radius: 100%;
-  // padding: 2px 4px;
 }
