@@ -8,21 +8,48 @@
   color: blue;
   text-decoration: line-through;
 }
+.todos__todos h1 {
+  font-weight: 700;
+  font-size: 22px;
+}
 
 .todos__container {
-  border: 1px solid red;
   margin-left: 30px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
 
-  .todos__header {
-    font-size: 1rem;
-    font-weight: 800;
+  .todos__input {
+    background-color: lightgrey;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    flex: 1;
+  }
+  .todos__todos {
+    flex: 8;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  .todos__todos .header__date {
+    margin-bottom: 10px;
   }
 
-  .todo__container {
-    // background-color: gray;
-    margin-bottom: 10px;
-    cursor: default;
+  .todos__contents {
+    border: 1px dotted black;
+    margin-bottom: 16px;
+
+    .todos__header {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .todo__container {
+      // background-color: gray;
+      margin-bottom: 10px;
+      cursor: default;
+    }
   }
 
   .todo__content {

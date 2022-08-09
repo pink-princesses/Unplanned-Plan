@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CalanderContents from '../components/calander/CalanderContents';
 import CalanderHeader from '../components/calander/CalanderHeader';
 import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
+import { ContextApi } from '../App';
 
 function Calander() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const { todoState, toggleTodoState } = useContext(ContextApi);
 
   useEffect(() => {
     setYear(currentDate.getFullYear());
@@ -29,15 +30,15 @@ function Calander() {
         />
         <CalanderContents year={year} month={month} currentDate={currentDate} />
         <div
-          className="togle_todo_btn"
+          className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {
-            setIsActive(!isActive);
+            toggleTodoState();
           }}
         >
-          {isActive ? '투두닫어' : '투두열어'}
+          {todoState ? '투두닫어' : ''}
         </div>
       </div>
-      <div className={isActive ? '' : 'hide'}>
+      <div className={todoState ? '' : 'hide'}>
         <Todo />
       </div>
     </div>

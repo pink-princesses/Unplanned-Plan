@@ -2,18 +2,27 @@
   box-sizing: border-box;
 }
 .show {
-  display: block;
+  display: block !important;
 }
 
 .hide {
-  display: hide;
+  display: hide !important;
+}
+
+.many {
+  background-color: pink !important;
+}
+
+.done {
+  text-decoration: line-through !important;
 }
 
 .calander {
   padding: 60px;
   display: flex;
-  border: 1px solid black;
-  max-height: 930px;
+  box-sizing: border-box;
+  border: 1px solid red;
+  height: 937px;
 }
 
 .calander__container {
@@ -75,14 +84,15 @@
   .calander__days {
     box-sizing: border-box;
     width: calc(100% / 7);
-    min-height: 120px;
+    height: 142px;
     text-align: right;
-    padding: 10px;
+    padding: 12px;
     // padding-bottom: 80px;
     border-top: 1px solid rgba(0, 0, 0, 0.4);
     border-right: 1px solid rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
+    background-color: white;
   }
   .calander__days:nth-child(7n) {
     background-color: #f5f5f5;
@@ -93,20 +103,41 @@
     background-color: #f5f5f5;
     color: rgba(0, 0, 0, 0.4);
   }
+  .calander__days .todoContent {
+    color: black;
+  }
+
   .calander__days__top {
     display: flex;
     justify-content: space-between;
+    margin-top: 2px;
     margin-bottom: 6px;
+
+    .day__highlight {
+      box-sizing: border-box;
+      color: #fff;
+      background-color: red;
+      border-radius: 100%;
+      padding: 2px 8.8px;
+    }
+    .day__status {
+      margin-left: 8px;
+    }
   }
-  .calander__days__btm {
+  .calander__days__btn {
     display: flex;
     flex-direction: column;
   }
-  .calander__days__btm span {
+  .calander__days__btn div {
     margin: 4px 0;
     border-radius: 4px;
     padding: 4px 6px;
-    background-color: aqua;
+    background-color: rgba(0, 0, 0, 0.09);
+    cursor: move;
+    text-align: left;
+  }
+  .calander__days__btn div:hover {
+    background-color: yellow;
   }
 
   .calander__addbtn {
@@ -125,12 +156,4 @@
   width: 4rem;
   height: 4rem;
   background-color: aqua;
-}
-
-.day__highlight {
-  box-sizing: border-box;
-  color: #fff;
-  background-color: red;
-  // border-radius: 100%;
-  // padding: 2px 4px;
 }
