@@ -7,7 +7,7 @@ import TodoContent from './TodoContent';
 function Todo(props: any) {
   const [todos, setTodos] = useState([]);
   const [content, setContnet] = useState('');
-  const [date, setDate] = useState('');
+  const [inputDate, setInputDate] = useState('');
   const [checkDone, setCheckDone] = useState(false);
   const { todoDate } = useContext(ContextApi);
 
@@ -19,10 +19,19 @@ function Todo(props: any) {
   };
   useEffect(() => {
     getTodosReq();
+    handleDate(todoDate);
   }, [todoDate]);
 
   const handleRefresh = () => {
     getTodosReq();
+  };
+
+  const handleDate = (data: any) => {
+    setInputDate(
+      `${data.year}${data.month.toString().padStart(2, '0')}${data.day
+        .toString()
+        .padStart(2, '0')}`,
+    );
   };
 
   const handleContent = (e: any) => {
@@ -30,13 +39,16 @@ function Todo(props: any) {
   };
 
   const handleSubmit = () => {
-    try {
-      createTodo(content, checkDone).then((data) => {
+    createTodo(content, checkDone, inputDate)
+      .then((data) => {
         console.log(data, 'handleSubmit 완료');
+      })
+      .then(() => {
+        handleRefresh();
+      })
+      .catch((e) => {
+        console.log(e, 'handleSubmit 에러');
       });
-    } catch (e) {
-      console.log(e, 'handleSubmit 에러');
-    }
   };
 
   const handleCheckbox = () => {
@@ -51,21 +63,20 @@ function Todo(props: any) {
           onChange={(e) => handleContent(e)}
           value={content}
         />
-        {/* <input
-          type="checkbox"
-          className="done__Checkbox"
-          onChange={handleCheckbox}
-        />
-        <label htmlFor="done__Checkbox">완료</label> */}
         <button onClick={handleSubmit} className="submit__btn">
           작성완료
         </button>
       </div>
       <div className="todos__todos">
-        <h1>{`${todoDate.month}/${todoDate.day}`}</h1>
+        <h1 className="header__date">{`${todoDate.month}/${todoDate.day}`}</h1>
         {todos
           ? todos.map((todo: any) => (
-              <TodoContent todo={todo} key={todo.id} refresh={handleRefresh} />
+              <TodoContent
+                todo={todo}
+                key={todo.id}
+                refresh={handleRefresh}
+                inputDate={inputDate}
+              />
             ))
           : '로딩불가'}
       </div>

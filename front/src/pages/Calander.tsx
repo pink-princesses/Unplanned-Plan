@@ -30,12 +30,12 @@ function Calander() {
         />
         <CalanderContents year={year} month={month} currentDate={currentDate} />
         <div
-          className="togle_todo_btn"
+          className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {
             toggleTodoState();
           }}
         >
-          {todoState ? '투두닫어' : '투두열어'}
+          {todoState ? '투두닫어' : ''}
         </div>
       </div>
       <div className={todoState ? '' : 'hide'}>

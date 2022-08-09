@@ -6,17 +6,16 @@ function TodoContent(props: any) {
   const [todoDone, setTodoDone] = useState(props.todo.done);
 
   const handleDone = () => {
-    try {
-      updateTodo(props.todo.id, todoContent, !todoDone)
-        .then(() => {
-          setTodoDone(!todoDone);
-        })
-        .then(() => {
-          props.refresh();
-        });
-    } catch (e) {
-      console.log(e, 'handleDone ERROR!!!');
-    }
+    updateTodo(props.todo.id, todoContent, !todoDone, props.inputDate)
+      .then(() => {
+        setTodoDone(!todoDone);
+      })
+      .then(() => {
+        props.refresh();
+      })
+      .catch((e) => {
+        console.log(e, 'handleDone ERROR!!!');
+      });
   };
 
   return (

@@ -22,17 +22,19 @@ function CalanderDay({ year, month, day }) {
         <div>
           <span className={TODAY === day ? 'day__highlight' : null}>{day}</span>
           <span className="day__status">
-            {todos.length > 10
+            {todos.length >= 10
               ? dayStatus[2]
-              : 10 > todos.length >= 7
+              : 10 > todos.length > 6
               ? dayStatus[1]
-              : todos.length > 3
+              : 6 > todos.length > 3
               ? dayStatus[0]
               : ''}
           </span>
         </div>
         <span
-          className="calander__addbtn"
+          className={
+            todos.length > 3 ? 'calander__addbtn many' : 'calander__addbtn'
+          }
           onClick={() => {
             openTodoState({ year, month, day });
           }}
@@ -42,7 +44,9 @@ function CalanderDay({ year, month, day }) {
       </div>
       <div className="calander__days__btn">
         {todos.length >= 1
-          ? todos.map((todo, idx) => <CalanderDayTodo todo={todo} key={idx} />)
+          ? todos
+              .slice(0, 3)
+              .map((todo, idx) => <CalanderDayTodo todo={todo} key={idx} />)
           : null}
       </div>
     </div>

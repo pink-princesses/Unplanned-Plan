@@ -17,7 +17,7 @@ async function getTodos({ year, month, day }) {
 }
 
 // todo 작성
-async function createTodo(content, done = false, date = '20220815') {
+async function createTodo(content, done = false, date) {
   return await api.post('api/todos/create', {
     date: date,
     content: content,
@@ -26,12 +26,14 @@ async function createTodo(content, done = false, date = '20220815') {
 }
 
 // todo 내용수정
-async function updateTodo(todo_pk, content, done, date = '20220815') {
+async function updateTodo(todo_pk, content, done, date) {
   return await api.put(`api/todos/update/${todo_pk}`, {
     date: date,
     content: content,
     done: done,
   });
 }
+
+// todo 날짜만수정
 
 export { getAllTodos, getTodos, createTodo, updateTodo };
