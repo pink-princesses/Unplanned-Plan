@@ -1,20 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+
 import CalanderDOW from './CalanderDOW';
 import CalanderDay from './CalanderDay';
-import './Calander.scss';
 import { todosContext } from '../../contexts/todosContext';
+import './Calander.scss';
 
-function CalanderContents({ currentDate }) {
+function CalanderContents() {
   const dayOftheWeek = ['일', '월', '화', '수', '목', '금', '토'];
-  const [dayList, setDayList] = useState([]);
-  const { todos, initiateTodos } = useContext(todosContext);
-
-  useEffect(() => {
-    (async () => {
-      await initiateTodos(currentDate);
-      setDayList(Object.keys(todos));
-    })();
-  }, []);
+  const { todos, dayList } = useContext(todosContext);
 
   return (
     <>
@@ -25,7 +18,7 @@ function CalanderContents({ currentDate }) {
       </div>
       <div className="calander__days__wrapper">
         {dayList.map((date) => (
-          <CalanderDay key={date} date={date} todos={todos} />
+          <CalanderDay key={date} date={date} todos={todos[date]} />
         ))}
       </div>
     </>

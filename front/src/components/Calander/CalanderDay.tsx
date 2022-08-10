@@ -2,8 +2,9 @@ import { useContext } from 'react';
 import { ContextApi } from '../../App';
 import CalanderDayTodo from './CalanderDayTodo';
 import './Calander.scss';
+import { todoType } from '../../types';
 
-function CalanderDay({ date, todos }) {
+function CalanderDay({ date, todos }: Props) {
   const year = Number(date.slice(0, 4));
   const month = Number(date.slice(4, 6));
   const day = Number(date.slice(6));
@@ -16,13 +17,13 @@ function CalanderDay({ date, todos }) {
     <div className="calander__days">
       <div className="calander__days__top">
         <div>
-          <span className={TODAY === day ? 'day__highlight' : null}>{day}</span>
+          <span className={TODAY === day ? 'day__highlight' : ''}>{day}</span>
           <span className="day__status">
             {todos.length >= 10
               ? dayStatus[2]
-              : 10 > todos.length > 6
+              : 10 > todos.length && todos.length > 6
               ? dayStatus[1]
-              : 6 > todos.length > 3
+              : 6 > todos.length && todos.length > 3
               ? dayStatus[0]
               : ''}
           </span>
@@ -50,3 +51,8 @@ function CalanderDay({ date, todos }) {
 }
 
 export default CalanderDay;
+
+interface Props {
+  date: string;
+  todos: todoType[];
+}

@@ -1,25 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CalanderContents from '../components/calander/CalanderContents';
 import CalanderHeader from '../components/calander/CalanderHeader';
 import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
 import { ContextApi } from '../App';
-import TodosProvider from '../contexts/todosContext';
+import { todosContext } from '../contexts/todosContext';
 
 function Calander() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(0);
-  const { todoState, toggleTodoState } = useContext(ContextApi);
-
-  useEffect(() => {
-    setYear(currentDate.getFullYear());
-    setMonth(currentDate.getMonth() + 1);
-  }, []);
+  const [selectedDate, setSelectedDate] = useState<string>('00000000');
+  const { todoDate, todoState, toggleTodoState } = useContext(ContextApi);
+  const { initiateTodos } = useContext(todosContext);
 
   const changeCalander = (dir: string) => {
     console.log(dir, 'changeCalander');
   };
+
+  useEffect(() => {
+    setYear(currentDate.getFullYear());
+    setMonth(currentDate.getMonth() + 1);
+    initiateTodos(currentDate);
+  }, []);
 
   return (
     <div className="calander">
@@ -29,9 +32,7 @@ function Calander() {
           month={month}
           changeCalander={changeCalander}
         />
-        <TodosProvider>
-          <CalanderContents currentDate={currentDate} />
-        </TodosProvider>
+        <CalanderContents />
         <div
           className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {

@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from 'react';
+import { createContext, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.module.scss';
@@ -7,6 +7,7 @@ import Intro from './pages/Intro';
 import Calander from './pages/Calander';
 import Login from './pages/Login';
 import PersonalSettings from './pages/PersonalSettings';
+import TodosProvider from './contexts/todosContext';
 
 type initialValueType = {
   todoState: boolean;
@@ -54,14 +55,16 @@ function App() {
 
   return (
     <ContextApi.Provider value={contextValue}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/personalSettings" element={<PersonalSettings />} />
-          <Route path="/calander" element={<Calander />} />
-        </Routes>
-      </BrowserRouter>
+      <TodosProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Intro />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/personalSettings" element={<PersonalSettings />} />
+            <Route path="/calander" element={<Calander />} />
+          </Routes>
+        </BrowserRouter>
+      </TodosProvider>
     </ContextApi.Provider>
   );
 }

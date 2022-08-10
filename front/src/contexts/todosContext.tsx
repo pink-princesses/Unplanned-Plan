@@ -1,13 +1,24 @@
 import { createContext, useState } from 'react';
 import { getTodos } from '../api/requests';
-import { defaultTodo } from '../types';
+import { todoType } from '../types';
+import { ChildrenProps } from '../types/ChildrenProps';
 
-export const todosContext = createContext(defaultTodo);
+interface todosType {
+  [index: string]: todoType[];
+}
 
-export default function TodosProvider({ children }) {
-  const [todos, setTodos] = useState({});
+export const todosContext = createContext({
+  todos: {} as todosType,
+  initiateTodos: (currentDate: Date) => {},
+  updateTodos: (date: string, todo: todoType) => {},
+  dayList: [''],
+});
 
-  const initiateTodos = async (currentDate) => {
+export default function TodosProvider({ children }: ChildrenProps) {
+  const [todos, setTodos] = useState<todosType>({});
+  const [dayList, setDayList] = useState<string[]>([]);
+
+  const initiateTodos = async (currentDate: Date) => {
     const thisYear = currentDate.getFullYear();
     const thisMonth = currentDate.getMonth() + 1;
 
@@ -35,12 +46,12 @@ export default function TodosProvider({ children }) {
     const nowDays = getThisMonthDate(thisYear, thisMonth, nextMonthLastDate);
 
     const promiseQueue = [];
-    for (let c of [...prevDays, ...nowDays, ...nextDays]) {
+    for (const c of [...prevDays, ...nowDays, ...nextDays]) {
       const tmp = new Promise((resolve, reject) => {
         getTodos(c)
           .then((response) => {
             todos[c] = response.data;
-            resolve();
+            resolve('success');
           })
           .catch(() => {
             reject();
@@ -49,21 +60,27 @@ export default function TodosProvider({ children }) {
       promiseQueue.push(tmp);
     }
     await Promise.all(promiseQueue);
+    setDayList(Object.keys(todos));
   };
 
-  const updateTodos = (date, todo) => {
+  const updateTodos = (date: string, todo: todoType) => {
     const tmp = JSON.parse(JSON.stringify(todos));
     tmp[date] = todo;
     setTodos(tmp);
   };
 
-  const value = { todos, initiateTodos, updateTodos };
+  const value = { todos, initiateTodos, updateTodos, dayList };
   return (
     <todosContext.Provider value={value}>{children}</todosContext.Provider>
   );
 }
 
-function getPrevMonthDate(year, month, lastDay, lastDate) {
+function getPrevMonthDate(
+  year: number,
+  month: number,
+  lastDay: number,
+  lastDate: number,
+) {
   const result = [];
   if (lastDay !== 6) {
     for (let i = 0; i < lastDay + 1; i++) {
@@ -76,7 +93,7 @@ function getPrevMonthDate(year, month, lastDay, lastDate) {
   return result;
 }
 
-function getNextMonthDate(year, month, lastDay) {
+function getNextMonthDate(year: number, month: number, lastDay: number) {
   const result = [];
   for (let i = 1; i < 7 - lastDay; i++) {
     result.push(
@@ -87,7 +104,7 @@ function getNextMonthDate(year, month, lastDay) {
   return result;
 }
 
-function getThisMonthDate(year, month, lastDate) {
+function getThisMonthDate(year: number, month: number, lastDate: number) {
   const result = [];
   for (let i = 1; i <= lastDate; i++) {
     result.push(
