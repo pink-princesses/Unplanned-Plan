@@ -14,6 +14,7 @@ async function getTodos(date) {
 
 // todo 작성
 async function createTodo(content, done = false, date) {
+  console.log(date);
   return await api.post('api/todos/create', {
     date: date,
     content: content,

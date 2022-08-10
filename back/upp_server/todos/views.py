@@ -35,7 +35,6 @@ def create(request):
     token = request.headers.get('Authorization')
     if token != 'null':
       result = check_token_in_header(token)
-      print(type(result))
       if type(result) is int:
           serializer = TodoSerializer(data={'user':result, 'date': request.data["date"], 'content': request.data['content'], 'done': request.data["done"]})
 

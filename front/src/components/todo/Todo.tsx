@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { getAllTodos, createTodo, getTodos } from '../../api/requests';
+import { useState, useContext, useMemo } from 'react';
+
+import { createTodo } from '../../api/requests';
 import { ContextApi } from '../../App';
 import { todosContext } from '../../contexts/todosContext';
-import './Todo.scss';
 import TodoContent from './TodoContent';
+
+import './Todo.scss';
 
 function Todo() {
   const [content, setContnet] = useState('');
-  const [inputDate, setInputDate] = useState('');
-  const [checkDone, setCheckDone] = useState(false);
   const { todoDate } = useContext(ContextApi);
   const { todos } = useContext(todosContext);
 
@@ -18,13 +18,10 @@ function Todo() {
     [todoDate],
   );
   const day = useMemo(() => String(todoDate.day).padStart(2, '0'), [todoDate]);
-
-  const handleContent = (e: any) => {
-    setContnet(e.target.value);
-  };
+  const date = useMemo(() => `${year}${month}${day}`, [todoDate]);
 
   const handleSubmit = () => {
-    createTodo(content, checkDone, inputDate)
+    createTodo(content, false, date)
       .then((data) => {
         console.log(data, 'handleSubmit 완료');
       })
@@ -33,16 +30,12 @@ function Todo() {
       });
   };
 
-  const handleCheckbox = () => {
-    setCheckDone(!checkDone);
-  };
-
   return (
     <div className="todos__container">
       <div className="todos__input">
         <input
           placeholder="todo를 입력하세요"
-          onChange={(e) => handleContent(e)}
+          onChange={(e) => setContnet(e.target.value)}
           value={content}
         />
         <button onClick={handleSubmit} className="submit__btn">
@@ -51,9 +44,9 @@ function Todo() {
       </div>
       <div className="todos__todos">
         <h1 className="header__date">{`${todoDate.month}/${todoDate.day}`}</h1>
-        {todos[`${year}${month}${day}`]
-          ? todos[`${year}${month}${day}`].map((todo: any) => (
-              <TodoContent todo={todo} key={todo.id} inputDate={inputDate} />
+        {todos[date]
+          ? todos[date].map((todo: any) => (
+              <TodoContent todo={todo} key={todo.id} inputDate={date} />
             ))
           : '로딩불가'}
       </div>
