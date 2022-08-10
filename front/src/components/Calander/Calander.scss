@@ -105,6 +105,9 @@
   }
   .calander__days .todoContent {
     color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .calander__days__top {

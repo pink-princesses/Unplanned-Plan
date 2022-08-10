@@ -37,7 +37,7 @@ def check_token_in_header(token):
 						else:
 								User = get_user_model()
 								try:
-										user = User.objects.get(name=user_name)
+										user = User.objects.get(email=user_email)
 										return user.pk
 								except:
 										return AM005

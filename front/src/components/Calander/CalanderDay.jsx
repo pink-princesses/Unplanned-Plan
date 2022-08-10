@@ -1,20 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
-import { getTodos } from '../../api/requests';
+import { useContext } from 'react';
 import { ContextApi } from '../../App';
 import CalanderDayTodo from './CalanderDayTodo';
 import './Calander.scss';
 
-function CalanderDay({ year, month, day }) {
-  const [todos, setTodos] = useState([]);
+function CalanderDay({ date, todos }) {
+  const year = Number(date.slice(0, 4));
+  const month = Number(date.slice(4, 6));
+  const day = Number(date.slice(6));
+
   const TODAY = new Date().getDate();
   const { openTodoState } = useContext(ContextApi);
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
-
-  useEffect(() => {
-    getTodos({ year, month, day }).then((data) => {
-      setTodos(data.data);
-    });
-  }, []);
 
   return (
     <div className="calander__days">

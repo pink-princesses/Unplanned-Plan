@@ -2,17 +2,13 @@ import { axiosInstance } from './index';
 
 const api = axiosInstance;
 
-// 모든 todo 조회
+// 모든 todo 조회 - 동작 안함
 async function getAllTodos() {
   return await api.get('api/todos');
 }
 
 // 특정날짜 todo 조회
-async function getTodos({ year, month, day }) {
-  const date =
-    year.toString() +
-    month.toString().padStart(2, '0') +
-    day.toString().padStart(2, '0');
+async function getTodos(date) {
   return await api.get(`api/todos?date=${date}`);
 }
 

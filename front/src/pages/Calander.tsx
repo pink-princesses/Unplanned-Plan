@@ -4,6 +4,7 @@ import CalanderHeader from '../components/calander/CalanderHeader';
 import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
 import { ContextApi } from '../App';
+import TodosProvider from '../contexts/todosContext';
 
 function Calander() {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -28,7 +29,9 @@ function Calander() {
           month={month}
           changeCalander={changeCalander}
         />
-        <CalanderContents year={year} month={month} currentDate={currentDate} />
+        <TodosProvider>
+          <CalanderContents currentDate={currentDate} />
+        </TodosProvider>
         <div
           className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {

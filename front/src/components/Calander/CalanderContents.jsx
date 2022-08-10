@@ -1,40 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CalanderDOW from './CalanderDOW';
 import CalanderDay from './CalanderDay';
 import './Calander.scss';
+import { todosContext } from '../../contexts/todosContext';
 
-function CalanderContents({ year, month, currentDate }) {
+function CalanderContents({ currentDate }) {
   const dayOftheWeek = ['일', '월', '화', '수', '목', '금', '토'];
-  const [calanderDays, setCalanderDays] = useState([]);
-
-  const makeDays = () => {
-    let year = currentDate.getFullYear();
-    let month = currentDate.getMonth() + 1;
-
-    let prevLastDate = new Date(year, month - 1, 0).getDate();
-    let prevLastDay = new Date(year, month - 1, 0).getDay();
-
-    let nextLastDate = new Date(year, month, 0).getDate();
-    let nextLastDay = new Date(year, month, 0).getDay();
-
-    let prevDays = [];
-    if (prevLastDay !== 6) {
-      for (let i = 0; i < prevLastDay + 1; i++) {
-        prevDays.unshift(prevLastDate - i);
-      }
-    }
-
-    let nextDays = [];
-    for (let i = 1; i < 7 - nextLastDay; i++) {
-      nextDays.push(i);
-    }
-
-    let nowDays = [...Array(nextLastDate + 1).keys()].slice(1);
-    setCalanderDays(prevDays.concat(nowDays, nextDays));
-  };
+  const [dayList, setDayList] = useState([]);
+  const { todos, initiateTodos } = useContext(todosContext);
 
   useEffect(() => {
-    makeDays();
+    (async () => {
+      await initiateTodos(currentDate);
+      setDayList(Object.keys(todos));
+    })();
   }, []);
 
   return (
@@ -45,8 +24,8 @@ function CalanderContents({ year, month, currentDate }) {
         ))}
       </div>
       <div className="calander__days__wrapper">
-        {calanderDays.map((day, idx) => (
-          <CalanderDay year={year} month={month} day={day} key={idx} />
+        {dayList.map((date) => (
+          <CalanderDay key={date} date={date} todos={todos} />
         ))}
       </div>
     </>
