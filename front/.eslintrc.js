@@ -21,8 +21,11 @@ module.exports = {
   rules: {
     /** 함수의 명시적 타입 리턴을 명시적으로 써주지 않아도 되도록 하는 옵션. 이건 off 하는게 맞을까? */
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-unused-vars': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-empty-function': 'off',
     'no-unused-vars': 'off',
     'prettier/prettier': [
       'error',
