@@ -41,8 +41,16 @@
     margin-bottom: 16px;
 
     .todos__header {
-      font-size: 1rem;
-      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+
+      .todos__delBtn {
+        margin-left: 20px;
+        cursor: pointer;
+      }
+      .todos__delBtn:hover {
+        color: red;
+      }
     }
 
     .todo__container {

@@ -33,4 +33,9 @@ async function updateTodo(todo_pk, content, done, date) {
 
 // todo 날짜만수정
 
-export { getAllTodos, getTodos, createTodo, updateTodo };
+// todo 삭제
+async function deleteTodo(todo_pk) {
+  return await api.delete(`api/todos/delete/${todo_pk}`);
+}
+
+export { getAllTodos, getTodos, createTodo, updateTodo, deleteTodo };
