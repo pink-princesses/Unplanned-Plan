@@ -10,7 +10,7 @@ interface todosType {
 export const todosContext = createContext({
   todos: {} as todosType,
   initiateTodos: (currentDate: Date) => {},
-  updateTodos: (date: string, todo: todoType) => {},
+  updateTodos: (date: string) => {},
   dayList: [''],
 });
 
@@ -30,7 +30,6 @@ export default function TodosProvider({ children }: ChildrenProps) {
     ).getDay();
     const nextMonthLastDate = new Date(thisYear, thisMonth, 0).getDate();
     const nextMonthFirstDayOfWeek = new Date(thisYear, thisMonth, 0).getDay();
-
     const prevDays = getPrevMonthDate(
       thisYear,
       thisMonth - 1,
@@ -63,10 +62,16 @@ export default function TodosProvider({ children }: ChildrenProps) {
     setDayList(Object.keys(todos));
   };
 
-  const updateTodos = (date: string, todo: todoType) => {
+  const updateTodos = (date: string) => {
     const tmp = JSON.parse(JSON.stringify(todos));
-    tmp[date] = todo;
-    setTodos(tmp);
+    getTodos(date)
+      .then((response) => {
+        tmp[date] = response.data;
+        setTodos(tmp);
+      })
+      .catch(() => {
+        alert('추가 못함');
+      });
   };
 
   const value = { todos, initiateTodos, updateTodos, dayList };

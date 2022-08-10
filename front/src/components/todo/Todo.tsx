@@ -10,7 +10,7 @@ import './Todo.scss';
 function Todo() {
   const [content, setContnet] = useState('');
   const { todoDate } = useContext(ContextApi);
-  const { todos } = useContext(todosContext);
+  const { todos, updateTodos } = useContext(todosContext);
 
   const year = useMemo(() => String(todoDate.year), [todoDate]);
   const month = useMemo(
@@ -23,7 +23,7 @@ function Todo() {
   const handleSubmit = () => {
     createTodo(content, false, date)
       .then((data) => {
-        console.log(data, 'handleSubmit 완료');
+        updateTodos(date);
       })
       .catch((e) => {
         console.log(e, 'handleSubmit 에러');
@@ -45,7 +45,7 @@ function Todo() {
       <div className="todos__todos">
         <h1 className="header__date">{`${todoDate.month}/${todoDate.day}`}</h1>
         {todos[date]
-          ? todos[date].map((todo: any) => (
+          ? todos[date].map((todo) => (
               <TodoContent todo={todo} key={todo.id} inputDate={date} />
             ))
           : '로딩불가'}
