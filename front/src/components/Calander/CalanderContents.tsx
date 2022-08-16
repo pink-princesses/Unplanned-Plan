@@ -17,9 +17,12 @@ function CalanderContents() {
         ))}
       </div>
       <div className="calander__days__wrapper">
-        {dayList.map((date) => (
-          <CalanderDay key={date} date={date} todos={todos[date]} />
-        ))}
+        {dayList.map(
+          (date) =>
+            todos[date] && (
+              <CalanderDay key={date} date={date} todos={todos[date]} />
+            ),
+        )}
       </div>
     </>
   );

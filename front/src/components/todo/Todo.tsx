@@ -20,15 +20,7 @@ function Todo() {
   const day = useMemo(() => String(todoDate.day).padStart(2, '0'), [todoDate]);
   const date = useMemo(() => `${year}${month}${day}`, [todoDate]);
 
-  const handleSubmit = () => {
-    createTodo(content, false, date)
-      .then((data) => {
-        updateTodos(date);
-      })
-      .catch((e) => {
-        console.log(e, 'handleSubmit 에러');
-      });
-  };
+  const handleSubmit = () => {};
 
   return (
     <div className="todos__container">

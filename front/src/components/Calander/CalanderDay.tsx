@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { ContextApi } from '../../App';
 import CalanderDayTodo from './CalanderDayTodo';
 import './Calander.scss';
@@ -9,7 +9,7 @@ function CalanderDay({ date, todos }: Props) {
   const month = Number(date.slice(4, 6));
   const day = Number(date.slice(6));
 
-  const TODAY = new Date().getDate();
+  const TODAY = useMemo(() => new Date().getDate(), []);
   const { openTodoState } = useContext(ContextApi);
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 

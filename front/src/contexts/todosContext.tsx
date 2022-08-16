@@ -1,7 +1,8 @@
 import { createContext, useState } from 'react';
-import { getTodos } from '../api/requests';
+import { getAllTodos, getTodos } from '../api/requests';
 import { todoType } from '../types';
 import { ChildrenProps } from '../types/ChildrenProps';
+import cloneDeep from 'lodash';
 
 interface todosType {
   [index: string]: todoType[];
@@ -9,8 +10,8 @@ interface todosType {
 
 export const todosContext = createContext({
   todos: {} as todosType,
-  initiateTodos: (currentDate: Date) => {},
-  updateTodos: (date: string) => {},
+  updateDateList: (thisYear: number, thisMonth: number) => {},
+  updateTodos: async (firstDate: string, LastDate: string) => {},
   dayList: [''],
 });
 
@@ -18,10 +19,7 @@ export default function TodosProvider({ children }: ChildrenProps) {
   const [todos, setTodos] = useState<todosType>({});
   const [dayList, setDayList] = useState<string[]>([]);
 
-  const initiateTodos = async (currentDate: Date) => {
-    const thisYear = currentDate.getFullYear();
-    const thisMonth = currentDate.getMonth() + 1;
-
+  const updateDateList = (thisYear: number, thisMonth: number) => {
     const prevMonthLastDate = new Date(thisYear, thisMonth - 1, 0).getDate();
     const prevMonthLastDayOfWeek = new Date(
       thisYear,
@@ -43,38 +41,21 @@ export default function TodosProvider({ children }: ChildrenProps) {
       nextMonthFirstDayOfWeek,
     );
     const nowDays = getThisMonthDate(thisYear, thisMonth, nextMonthLastDate);
-
-    const promiseQueue = [];
-    for (const c of [...prevDays, ...nowDays, ...nextDays]) {
-      const tmp = new Promise((resolve, reject) => {
-        getTodos(c)
-          .then((response) => {
-            todos[c] = response.data;
-            resolve('success');
-          })
-          .catch(() => {
-            reject();
-          });
-      });
-      promiseQueue.push(tmp);
-    }
-    await Promise.all(promiseQueue);
-    setDayList(Object.keys(todos));
+    const tmpDateList = [...prevDays, ...nowDays, ...nextDays];
+    setDayList(tmpDateList);
   };
 
-  const updateTodos = (date: string) => {
-    const tmp = JSON.parse(JSON.stringify(todos));
-    getTodos(date)
-      .then((response) => {
-        tmp[date] = response.data;
-        setTodos(tmp);
-      })
-      .catch(() => {
-        alert('추가 못함');
-      });
+  const updateTodos = async (firstDate: string, lastDate: string) => {
+    const tmpTodos = {} as todosType;
+
+    dayList.forEach((date) => (tmpTodos[date] = []));
+
+    const response = (await getAllTodos(firstDate, lastDate)).data;
+    response.forEach((el: todoType) => tmpTodos[el.date].push(el));
+    setTodos(tmpTodos);
   };
 
-  const value = { todos, initiateTodos, updateTodos, dayList };
+  const value = { todos, updateDateList, updateTodos, dayList };
   return (
     <todosContext.Provider value={value}>{children}</todosContext.Provider>
   );

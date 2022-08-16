@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { updateTodo } from '../../api/requests';
 
 function TodoContent(props: any) {
