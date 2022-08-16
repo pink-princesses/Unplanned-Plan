@@ -2,7 +2,7 @@ import { axiosInstance } from './index';
 
 const api = axiosInstance;
 
-// 모든 todo 조회
+// 보여지는 달력 todo 조회
 async function getAllTodos(firstDate, lastDate) {
   return (await api.get(`api/todos/range/${firstDate}/${lastDate}`)).data;
 }

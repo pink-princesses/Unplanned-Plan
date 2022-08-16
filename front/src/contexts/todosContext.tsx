@@ -11,7 +11,7 @@ interface todosType {
 export const todosContext = createContext({
   todos: {} as todosType,
   updateDateList: (thisYear: number, thisMonth: number) => {},
-  updateTodos: async (firstDate: string, LastDate: string) => {},
+  updateTodos: async () => {},
   dayList: [''],
 });
 
@@ -45,7 +45,10 @@ export default function TodosProvider({ children }: ChildrenProps) {
     setDayList(tmpDateList);
   };
 
-  const updateTodos = async (firstDate: string, lastDate: string) => {
+  const updateTodos = async () => {
+    const firstDate = dayList[0];
+    const lastDate = dayList[dayList.length - 1];
+    if (!firstDate || !lastDate) return;
     const tmpTodos = {} as todosType;
 
     dayList.forEach((date) => (tmpTodos[date] = []));

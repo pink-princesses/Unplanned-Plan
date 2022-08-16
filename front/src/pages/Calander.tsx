@@ -39,7 +39,7 @@ function Calander() {
 
   useEffect(() => {
     (async () => {
-      await updateTodos(dayList[0], dayList[dayList.length - 1]);
+      await updateTodos();
     })();
   }, [dayList]);
 

@@ -1,15 +1,19 @@
 import { useContext, useMemo } from 'react';
-import { ContextApi } from '../../App';
+
 import CalanderDayTodo from './CalanderDayTodo';
-import './Calander.scss';
+
+import { ContextApi } from '../../App';
 import { todoType } from '../../types';
+import './Calander.scss';
 
 function CalanderDay({ date, todos }: Props) {
   const year = Number(date.slice(0, 4));
   const month = Number(date.slice(4, 6));
   const day = Number(date.slice(6));
 
-  const TODAY = useMemo(() => new Date().getDate(), []);
+  const MONTH = useMemo(() => new Date().getMonth() + 1, []);
+  const DAY = useMemo(() => new Date().getDate(), []);
+
   const { openTodoState } = useContext(ContextApi);
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 
@@ -17,7 +21,11 @@ function CalanderDay({ date, todos }: Props) {
     <div className="calander__days">
       <div className="calander__days__top">
         <div>
-          <span className={TODAY === day ? 'day__highlight' : ''}>{day}</span>
+          <span
+            className={DAY === day && MONTH === month ? 'day__highlight' : ''}
+          >
+            {day}
+          </span>
           <span className="day__status">
             {todos.length >= 10
               ? dayStatus[2]

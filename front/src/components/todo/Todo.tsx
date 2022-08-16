@@ -10,7 +10,7 @@ import './Todo.scss';
 function Todo() {
   const [content, setContnet] = useState('');
   const { todoDate } = useContext(ContextApi);
-  const { todos, updateTodos } = useContext(todosContext);
+  const { todos, updateTodos, dayList } = useContext(todosContext);
 
   const year = useMemo(() => String(todoDate.year), [todoDate]);
   const month = useMemo(
@@ -20,7 +20,11 @@ function Todo() {
   const day = useMemo(() => String(todoDate.day).padStart(2, '0'), [todoDate]);
   const date = useMemo(() => `${year}${month}${day}`, [todoDate]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    await createTodo(content, false, date);
+    await updateTodos();
+    setContnet('');
+  };
 
   return (
     <div className="todos__container">
