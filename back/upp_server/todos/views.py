@@ -102,14 +102,19 @@ def update(request, todo_pk):
 
 @api_view(['DELETE'])
 def delete(request, todo_pk):
-  todo = Todo.objects.get(pk=todo_pk)
-  token = request.headers.get('jwt')
-  userInfo = check_jwt_token(token)
+    jwt_token = request.headers.get('jwt')
+    refresh_token = request.headers.get('refresh')
 
-  if userInfo == todo.user:
-    todo.delete()
-    data = {
-      'delete' : f'{todo_pk}번 리뷰가 삭제되었습니다.'
-    }
-    return make_json_response({'result': data, 'message': TM001})
-  return make_json_response({'data': TM002}, 403)
+    result = check_exist_empty_token(jwt_token, refresh_token)
+    if result == AM001 or result == AM003 or result == AM005:
+        return make_json_response(result, 403)
+  
+    todo = Todo.objects.get(pk=todo_pk)
+
+    if result.get('user_id') == todo.user_id:
+        todo.delete()
+        data = {
+        'delete' : f'{todo_pk}번 리뷰가 삭제되었습니다.'
+        }
+        return make_json_response({'result': data, 'message': TM001})
+    return make_json_response({'data': TM002}, 403)
