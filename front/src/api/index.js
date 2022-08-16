@@ -4,12 +4,13 @@ const BASE_URL = 'http://localhost:8000/';
 
 const createAxiosInstance = () => {
   const jwtToken = localStorage.getItem('jwt');
+  const refreshToken = localStorage.getItem('refresh');
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
     headers: {
       'Content-type': 'application/json',
-      // 'Access-Control-Allow-Credentials': true,
-      'Authorization': jwtToken,
+      'jwt': jwtToken,
+      'refresh': refreshToken,
     },
   });
 

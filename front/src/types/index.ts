@@ -1,6 +1,6 @@
 export interface todoType {
   id: number;
-  data: string;
+  date: string;
   content: string;
   done: boolean;
   created_at: string;
