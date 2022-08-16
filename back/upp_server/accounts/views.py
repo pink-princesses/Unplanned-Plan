@@ -10,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 import env
 from .functions import *
 from messages import AM000, AM005
-from utils import generate_expiration_date, make_json_response, check_token_in_header
+from utils import generate_expiration_date, make_json_response,     check_jwt_token
 
 # Create your views here.
 def google_login(request):
@@ -54,7 +54,7 @@ def google_login(request):
 @require_http_methods(["POST"])
 def refresh_login_status(request):
 		token = request.headers.get('refresh')
-		result = check_token_in_header(token)
+		result =     check_jwt_token(token)
 
 		if result.get('status'):
 				return make_json_response({'data': result})
@@ -65,7 +65,7 @@ def refresh_login_status(request):
 @require_http_methods(["GET", "POST"])
 def get_user_info(request):
 		token = request.headers.get('jwt')
-		result = check_token_in_header(token)
+		result =     check_jwt_token(token)
 
 		if type(result) == int or result.get('status'):
 				User = get_user_model()

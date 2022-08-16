@@ -15,14 +15,12 @@ def generate_expiration_date(time):
 		return int((datetime.now() + timedelta(days=time)).timestamp())
 
 
-def check_token_in_header(token):
+def check_jwt_token(jwt_token):
 		# 토큰 존재 여부 확인
-		if not token:
+		if not jwt_token:
 				return AM001
 		else:
-				token_data = jwt.decode(token, env.JWT_PRIVATE_KEY, algorithms="HS256")
-
-				user_name = token_data.get('name')
+				token_data = jwt.decode(jwt_token, env.JWT_PRIVATE_KEY, algorithms="HS256")
 				user_email = token_data.get('email')
 				is_expiration = token_data.get('expiration_time') < datetime.now().timestamp()
 
@@ -37,24 +35,57 @@ def check_token_in_header(token):
 						else:
 								User = get_user_model()
 								try:
-										user = User.objects.get(name=user_name)
-										return user.pk
+										result = AM000
+										result['user_id'] = User.objects.get(email=user_email).pk
+										return result
 								except:
 										return AM005
-
-				elif token_data.get('type') == 'refresh':
-						if is_expiration:
-								return AM003
-						else:
-								jwt_token = jwt.encode({
-										'type': 'jwt',
-										'name': user_name, 
-										'email': user_email, 
-										'expiration_time': generate_expiration_date(1)
-								}, env.JWT_PRIVATE_KEY, algorithm=env.ALGORITHM)
-								response = AM000
-								response['jwt'] = jwt_token
-								return response
 				else:
 						return AM003
 
+
+def refresh_jwt_token(token):
+		token_data = jwt.decode(token, env.JWT_PRIVATE_KEY, algorithms="HS256")
+		user_name = token_data.get('name')
+		user_email = token_data.get('email')
+		is_expiration = token_data.get('expiration_time') < datetime.now().timestamp()
+
+		if token_data.get('type') == 'refresh':
+				if is_expiration:
+						return AM003
+				else:
+						jwt_token = jwt.encode({
+								'type': 'jwt',
+								'name': user_name, 
+								'email': user_email, 
+								'expiration_time': generate_expiration_date(1)
+						}, env.JWT_PRIVATE_KEY, algorithm=env.ALGORITHM)
+						try:
+								User = get_user_model()
+								user = User.objects.get(email=user_email)
+								response = AM000
+								response['jwt'] = jwt_token
+								response['user_id'] = user.pk
+								return response
+						except:
+								return AM005
+		else:
+				return AM001
+
+
+def check_exist_empty_token(jwt_token, refresh_token):
+    # 헤더에 토큰이 모두 없을 경우 조회 불가
+    if jwt_token == 'null' and refresh_token == 'null':
+        return AM001
+    # 헤더에 refresh 토큰만 있을 경우 조회 시도 가능
+    elif jwt_token == 'null':
+        result = refresh_jwt_token(refresh_token)
+    # 헤더에 jwt & refresh 토큰이 있을 경우 조회 시도 가능
+    else:
+        result = check_jwt_token(jwt_token)
+
+        #jwt 토큰가 만료되면 재발급 시도
+        if result == AM002:
+            result = refresh_jwt_token(refresh_token)
+
+    return result

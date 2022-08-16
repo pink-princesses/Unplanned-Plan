@@ -1,41 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { updateTodo } from '../../api/requests';
+import { useContext, useState } from 'react';
+import { updateTodo, deleteTodo } from '../../api/requests';
+import { todosContext } from '../../contexts/todosContext';
+import { todoType } from '../../types';
 
-function TodoContent(props: any) {
-  const [todoContent, setTodoContent] = useState(props.todo.content);
-  const [todoDone, setTodoDone] = useState(props.todo.done);
+function TodoContent({ todo, inputDate }: Props) {
+  const [todoContent, setTodoContent] = useState(todo.content);
+  const { updateTodos } = useContext(todosContext);
 
-  const handleDone = () => {
-    try {
-      updateTodo(props.todo.id, todoContent, !todoDone)
-        .then(() => {
-          setTodoDone(!todoDone);
-        })
-        .then(() => {
-          props.refresh();
-        });
-    } catch (e) {
-      console.log(e, 'handleDone ERROR!!!');
-    }
+  const handleDone = async () => {
+    await updateTodo(todo.id, todoContent, !todo.done, inputDate);
+    await updateTodos();
+  };
+
+  const handleDelete = async () => {
+    await deleteTodo(todo.id);
+    await updateTodos();
   };
 
   return (
-    <>
-      <div>{props.todo.id}</div>
-      <span className="todos__header">
-        {props.todo.created_at.slice(0, 19)}
-      </span>
+    <div className="todos__contents">
+      <div className="todos__header">
+        <span>
+          {`${todo.created_at.slice(0, 10)} ${todo.created_at.slice(11, 19)}`}
+        </span>
+        <span className="todos__delBtn" onClick={handleDelete}>
+          X
+        </span>
+      </div>
       <div className="todo__container">
         <div
-          className={props.todo.done ? 'todo__content done' : 'todo__content'}
+          className={todo.done ? 'todo__content done' : 'todo__content'}
           onClick={handleDone}
         >
           {todoContent}
         </div>
-        <p>{props.todo.updated_at.slice(0, 19)}</p>
+        <p>{todo.date}</p>
+        <p>{`${todo.updated_at.slice(0, 10)} ${todo.updated_at.slice(
+          11,
+          19,
+        )}`}</p>
       </div>
-    </>
+    </div>
   );
 }
 
 export default TodoContent;
+
+interface Props {
+  todo: todoType;
+  inputDate: string;
+}

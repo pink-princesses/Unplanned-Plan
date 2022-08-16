@@ -1,43 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CalanderContents from '../components/calander/CalanderContents';
 import CalanderHeader from '../components/calander/CalanderHeader';
 import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
+import { ContextApi } from '../App';
+import { todosContext } from '../contexts/todosContext';
 
 function Calander() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [year, setYear] = useState(0);
-  const [month, setMonth] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    setYear(currentDate.getFullYear());
-    setMonth(currentDate.getMonth() + 1);
-  }, []);
+  const [showYear, setShowYear] = useState(new Date().getFullYear());
+  const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
+  const { todoDate, todoState, toggleTodoState } = useContext(ContextApi);
+  const { dayList, updateDateList, updateTodos } = useContext(todosContext);
 
   const changeCalander = (dir: string) => {
-    console.log(dir, 'changeCalander');
+    switch (dir) {
+      case 'prev':
+        if (showMonth <= 1) {
+          setShowYear((pre) => pre - 1);
+          setShowMonth(12);
+        } else {
+          setShowMonth((pre) => pre - 1);
+        }
+        break;
+      case 'next':
+        if (showMonth >= 12) {
+          setShowYear((pre) => pre + 1);
+          setShowMonth(1);
+        } else {
+          setShowMonth((pre) => pre + 1);
+        }
+        break;
+    }
   };
+
+  useEffect(() => {
+    updateDateList(showYear, showMonth);
+  }, [showYear, showMonth]);
+
+  useEffect(() => {
+    (async () => {
+      await updateTodos();
+    })();
+  }, [dayList]);
 
   return (
     <div className="calander">
       <div className="calander__container">
         <CalanderHeader
-          year={year}
-          month={month}
+          year={showYear}
+          month={showMonth}
           changeCalander={changeCalander}
         />
-        <CalanderContents year={year} month={month} currentDate={currentDate} />
+        <CalanderContents />
         <div
-          className="togle_todo_btn"
+          className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {
-            setIsActive(!isActive);
+            toggleTodoState();
           }}
         >
-          {isActive ? '투두닫어' : '투두열어'}
+          {todoState ? '투두닫어' : ''}
         </div>
       </div>
-      <div className={isActive ? '' : 'hide'}>
+      <div className={todoState ? 'calander__todo' : 'calander__todo hide'}>
         <Todo />
       </div>
     </div>
