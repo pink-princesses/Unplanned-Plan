@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ContextApi } from '../../App';
 import './Calander.scss';
 
 function CalanderDayTodo({ todo }) {
+  const { setDragDate } = useContext(ContextApi);
   const [grab, setGrab] = useState(null);
 
   const handleDragStart = (e) => {
     console.log('start grab');
+    setDragDate(todo);
     e.target.classList.add('grabbing');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', e.target);
   };
 
   const handleDragEnd = (e) => {
-    console.log('end grab');
     e.target.classList.remove('grabbing');
   };
 
@@ -22,9 +24,6 @@ function CalanderDayTodo({ todo }) {
       className={todo.done ? 'todoContent done' : 'todoContent'}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onDrop={() => {
-        console.log('놓기');
-      }}
       onDragOver={(e) => {
         e.preventDefault();
       }}

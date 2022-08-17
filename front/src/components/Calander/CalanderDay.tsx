@@ -1,10 +1,12 @@
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 
 import CalanderDayTodo from './CalanderDayTodo';
 
+import { updateTodo } from '../../api/requests';
 import { ContextApi } from '../../App';
 import { todoType } from '../../types';
 import './Calander.scss';
+import { todosContext } from '../../contexts/todosContext';
 
 function CalanderDay({ date, todos }: Props) {
   const year = Number(date.slice(0, 4));
@@ -14,14 +16,27 @@ function CalanderDay({ date, todos }: Props) {
   const MONTH = useMemo(() => new Date().getMonth() + 1, []);
   const DAY = useMemo(() => new Date().getDate(), []);
 
-  const { openTodoState } = useContext(ContextApi);
+  const { openTodoState, dragTargetDate } = useContext(ContextApi);
+  const { updateTodos } = useContext(todosContext);
+
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
+
+  const handleDragDrop = async () => {
+    await updateTodo(
+      dragTargetDate.id,
+      dragTargetDate.content,
+      dragTargetDate.done,
+      date,
+    );
+    await updateTodos();
+  };
 
   return (
     <div
       className="calander__days"
-      onDragOver={() => {
-        console.log(date);
+      onDrop={handleDragDrop}
+      onDragOver={(e) => {
+        e.preventDefault();
       }}
     >
       <div className="calander__days__top">
