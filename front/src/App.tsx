@@ -14,6 +14,15 @@ const initialValue: initialValueType = {
   todoDate: { year: 0, month: 0, day: 0 },
   openTodoState: () => {},
   toggleTodoState: () => {},
+  closeTodoState: () => {},
+  dragTargetDate: {
+    id: 0,
+    date: '',
+    content: '',
+    done: false,
+    created_at: '',
+    updated_at: '',
+  },
 };
 
 export const ContextApi = createContext(initialValue);
@@ -21,6 +30,9 @@ export const ContextApi = createContext(initialValue);
 function App() {
   const [todoState, settodoState] = useState(false);
   const [todoDate, setTodoDate] = useState(initialValue.todoDate);
+  const [dragTargetDate, setDragTargetDate] = useState(
+    initialValue.dragTargetDate,
+  );
   const openTodoState = (date: todoDateType) => {
     setTodoDate(date);
     settodoState(() => {
@@ -32,11 +44,24 @@ function App() {
       return !prev;
     });
   };
+  const closeTodoState = () => {
+    settodoState(() => {
+      return false;
+    });
+  };
+
+  const setDragDate = (date: dragTargetDateType) => {
+    setDragTargetDate(date);
+  };
+
   const contextValue = {
     todoState: todoState,
     todoDate: todoDate,
     openTodoState: openTodoState,
     toggleTodoState: toggleTodoState,
+    closeTodoState: closeTodoState,
+    dragTargetDate: dragTargetDate,
+    setDragDate: setDragDate,
   };
 
   return (
@@ -62,10 +87,21 @@ interface initialValueType {
   todoDate: todoDateType;
   openTodoState: (date: todoDateType) => void;
   toggleTodoState: () => void;
+  closeTodoState: () => void;
+  dragTargetDate: dragTargetDateType;
 }
 
 interface todoDateType {
   year: number;
   month: number;
   day: number;
+}
+
+interface dragTargetDateType {
+  id: number;
+  date: string;
+  content: string;
+  done: boolean;
+  created_at: string;
+  updated_at: string;
 }
