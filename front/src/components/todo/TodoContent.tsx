@@ -13,8 +13,11 @@ function TodoContent({ todo, inputDate }: Props) {
   };
 
   const handleDelete = async () => {
-    await deleteTodo(todo.id);
-    await updateTodos();
+    const res = confirm('todo를 삭제합니다');
+    if (res) {
+      await deleteTodo(todo.id);
+      await updateTodos();
+    }
   };
 
   return (
