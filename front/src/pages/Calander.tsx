@@ -54,7 +54,7 @@ function Calander() {
           month={showMonth}
           changeCalander={changeCalander}
         />
-        <CalanderContents />
+        <CalanderContents thisMonth={showMonth} />
         <div
           className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {

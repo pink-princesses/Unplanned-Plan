@@ -21,6 +21,10 @@
   cursor: move;
 }
 
+.unhighlight {
+  opacity: 0.2 !important;
+}
+
 .calander {
   padding: 60px;
   display: flex;
