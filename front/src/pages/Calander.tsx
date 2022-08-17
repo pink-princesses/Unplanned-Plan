@@ -9,7 +9,8 @@ import { todosContext } from '../contexts/todosContext';
 function Calander() {
   const [showYear, setShowYear] = useState(new Date().getFullYear());
   const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
-  const { todoDate, todoState, toggleTodoState } = useContext(ContextApi);
+  const { todoDate, todoState, toggleTodoState, closeTodoState } =
+    useContext(ContextApi);
   const { dayList, updateDateList, updateTodos } = useContext(todosContext);
 
   const changeCalander = (dir: string) => {
@@ -21,6 +22,7 @@ function Calander() {
         } else {
           setShowMonth((pre) => pre - 1);
         }
+        closeTodoState();
         break;
       case 'next':
         if (showMonth >= 12) {
@@ -29,6 +31,7 @@ function Calander() {
         } else {
           setShowMonth((pre) => pre + 1);
         }
+        closeTodoState();
         break;
     }
   };
@@ -51,7 +54,7 @@ function Calander() {
           month={showMonth}
           changeCalander={changeCalander}
         />
-        <CalanderContents />
+        <CalanderContents thisMonth={showMonth} />
         <div
           className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
           onClick={() => {
