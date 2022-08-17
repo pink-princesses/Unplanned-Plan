@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { debounce } from 'lodash';
 import { updateTodo, deleteTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
 import { todoType } from '../../types';
@@ -7,10 +8,11 @@ function TodoContent({ todo, inputDate }: Props) {
   const [todoContent, setTodoContent] = useState(todo.content);
   const { updateTodos } = useContext(todosContext);
 
-  const handleDone = async () => {
+  const handleDone = debounce(async () => {
+    console.log('요청');
     await updateTodo(todo.id, todoContent, !todo.done, inputDate);
     await updateTodos();
-  };
+  }, 500);
 
   const handleDelete = async () => {
     const res = confirm('todo를 삭제합니다');
