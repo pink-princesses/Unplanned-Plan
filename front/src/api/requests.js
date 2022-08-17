@@ -24,6 +24,7 @@ async function createTodo(content, done = false, date) {
 
 // todo 내용수정
 async function updateTodo(todo_pk, content, done, date) {
+  console.log(date);
   return await api.put(`api/todos/update/${todo_pk}`, {
     date: date,
     content: content,

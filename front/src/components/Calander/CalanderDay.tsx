@@ -1,10 +1,12 @@
 import { useContext, useMemo } from 'react';
 
-import CalanderDayTodo from './CalanderDayTodo';
-
 import { ContextApi } from '../../App';
 import { todoType } from '../../types';
+import { updateTodo } from '../../api/requests';
+import { todosContext } from '../../contexts/todosContext';
 import './Calander.scss';
+
+let targetDate = '';
 
 function CalanderDay({ date, todos }: Props) {
   const year = Number(date.slice(0, 4));
@@ -15,14 +17,26 @@ function CalanderDay({ date, todos }: Props) {
   const DAY = useMemo(() => new Date().getDate(), []);
 
   const { openTodoState } = useContext(ContextApi);
+  const { updateTodos } = useContext(todosContext);
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 
+  const end = async (id: number, content: string, done: boolean) => {
+    console.log(targetDate);
+    await updateTodo(id, content, done, targetDate);
+    await updateTodos();
+  };
+
+  const changeTargetDate = (e: any) => {
+    const target = e.target;
+    if (!target.tagName) return;
+
+    if (target.tagName === 'UL' || target.tagName === 'DIV')
+      targetDate = e.target.classList[1];
+  };
   return (
     <div
-      className="calander__days"
-      onDragOver={() => {
-        console.log(date);
-      }}
+      className={`calander__days ${date}`}
+      onDragEnter={(e) => changeTargetDate(e)}
     >
       <div className="calander__days__top">
         <div>
@@ -52,11 +66,18 @@ function CalanderDay({ date, todos }: Props) {
           +
         </span>
       </div>
-      <ul className="calander__days__btn">
+      <ul className={`calander__days__btn ${date}`}>
         {todos.length >= 1
-          ? todos
-              .slice(0, 3)
-              .map((todo, idx) => <CalanderDayTodo todo={todo} key={idx} />)
+          ? todos.slice(0, 3).map((todo, idx) => (
+              <li
+                draggable="true"
+                className={todo.done ? 'todoContent done' : 'todoContent'}
+                key={todo.id}
+                onDragEnd={() => end(todo.id, todo.content, todo.done)}
+              >
+                {todo.content}
+              </li>
+            ))
           : null}
       </ul>
     </div>
