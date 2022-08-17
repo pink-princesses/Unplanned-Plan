@@ -19,7 +19,11 @@ function Calander() {
   }, [showYear, showMonth]);
 
   useEffect(() => {
-    (async () => await updateTodos())();
+    try {
+      (async () => await updateTodos())();
+    } catch (error) {
+      alert('TODO LIST를 불러오지 못했습니다');
+    }
   }, [dayList]);
 
   return (

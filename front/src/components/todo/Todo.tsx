@@ -22,8 +22,12 @@ function Todo() {
   const date = useMemo(() => `${year}${month}${day}`, [todoDate]);
 
   const handleSubmit = async () => {
-    await createTodo(content, false, date);
-    await updateTodos();
+    try {
+      await createTodo(content, false, date);
+      await updateTodos();
+    } catch (error) {
+      alert('추가하지 못했습니다');
+    }
     setContnet('');
   };
 

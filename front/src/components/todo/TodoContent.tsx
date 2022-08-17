@@ -10,16 +10,23 @@ function TodoContent({ todo, inputDate }: Props) {
   const { updateTodos } = useContext(todosContext);
 
   const handleDone = debounce(async () => {
-    console.log('요청');
-    await updateTodo(todo.id, todoContent, !todo.done, inputDate);
-    await updateTodos();
+    try {
+      await updateTodo(todo.id, todoContent, !todo.done, inputDate);
+      await updateTodos();
+    } catch (error) {
+      alert('완료 처리를 하지 못했습니다');
+    }
   }, 500);
 
   const handleDelete = async () => {
     const res = confirm('todo를 삭제합니다');
     if (res) {
-      await deleteTodo(todo.id);
-      await updateTodos();
+      try {
+        await deleteTodo(todo.id);
+        await updateTodos();
+      } catch (error) {
+        alert('삭제하지 못했습니다');
+      }
     }
   };
 

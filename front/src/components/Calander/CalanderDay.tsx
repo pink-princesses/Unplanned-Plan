@@ -21,8 +21,12 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
   const { updateTodos } = useContext(todosContext);
 
   const dropHandler = async (id: number, content: string, done: boolean) => {
-    await updateTodo(id, content, done, targetDate);
-    await updateTodos();
+    try {
+      await updateTodo(id, content, done, targetDate);
+      await updateTodos();
+    } catch (error) {
+      alert('일정 변경에 실패했습니다');
+    }
   };
 
   const dragHandler = (e: any) => {
