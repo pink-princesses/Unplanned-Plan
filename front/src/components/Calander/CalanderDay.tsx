@@ -21,7 +21,6 @@ function CalanderDay({ date, todos }: Props) {
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 
   const end = async (id: number, content: string, done: boolean) => {
-    console.log(targetDate);
     await updateTodo(id, content, done, targetDate);
     await updateTodos();
   };
@@ -36,7 +35,8 @@ function CalanderDay({ date, todos }: Props) {
   return (
     <div
       className={`calander__days ${date}`}
-      onDragEnter={(e) => changeTargetDate(e)}
+      onDrop={(e) => changeTargetDate(e)}
+      onDragOver={(e) => e.preventDefault()}
     >
       <div className="calander__days__top">
         <div>

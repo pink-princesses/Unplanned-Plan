@@ -14,7 +14,6 @@ async function getTodos(date) {
 
 // todo 작성
 async function createTodo(content, done = false, date) {
-  console.log(date);
   return await api.post('api/todos/create', {
     date: date,
     content: content,
@@ -24,7 +23,6 @@ async function createTodo(content, done = false, date) {
 
 // todo 내용수정
 async function updateTodo(todo_pk, content, done, date) {
-  console.log(date);
   return await api.put(`api/todos/update/${todo_pk}`, {
     date: date,
     content: content,
