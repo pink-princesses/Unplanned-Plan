@@ -1,9 +1,10 @@
 import { useState, useContext, useMemo } from 'react';
 
+import TodoContent from './TodoContent';
+
 import { createTodo } from '../../api/requests';
 import { drawerContext } from '../../contexts/drawerContext';
 import { todosContext } from '../../contexts/todosContext';
-import TodoContent from './TodoContent';
 
 import './Todo.scss';
 

@@ -1,58 +1,35 @@
 import { useContext, useEffect, useState } from 'react';
+
 import CalanderContents from '../components/calander/CalanderContents';
 import CalanderHeader from '../components/calander/CalanderHeader';
-import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
+
 import { todosContext } from '../contexts/todosContext';
+import '../components/calander/Calander.scss';
 import { drawerContext } from '../contexts/drawerContext';
 
 function Calander() {
   const [showYear, setShowYear] = useState(new Date().getFullYear());
   const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
-  const { todoState, toggleTodoState, closeTodoState } =
-    useContext(drawerContext);
+  const { todoState, toggleTodoState } = useContext(drawerContext);
   const { dayList, updateDateList, updateTodos } = useContext(todosContext);
-
-  const changeCalander = (dir: string) => {
-    switch (dir) {
-      case 'prev':
-        if (showMonth <= 1) {
-          setShowYear((pre) => pre - 1);
-          setShowMonth(12);
-        } else {
-          setShowMonth((pre) => pre - 1);
-        }
-        closeTodoState();
-        break;
-      case 'next':
-        if (showMonth >= 12) {
-          setShowYear((pre) => pre + 1);
-          setShowMonth(1);
-        } else {
-          setShowMonth((pre) => pre + 1);
-        }
-        closeTodoState();
-        break;
-    }
-  };
 
   useEffect(() => {
     updateDateList(showYear, showMonth);
   }, [showYear, showMonth]);
 
   useEffect(() => {
-    (async () => {
-      await updateTodos();
-    })();
+    (async () => await updateTodos())();
   }, [dayList]);
 
   return (
     <div className="calander">
       <div className="calander__container">
         <CalanderHeader
-          year={showYear}
-          month={showMonth}
-          changeCalander={changeCalander}
+          showYear={showYear}
+          showMonth={showMonth}
+          setShowYear={setShowYear}
+          setShowMonth={setShowMonth}
         />
         <CalanderContents thisMonth={showMonth} />
         <div

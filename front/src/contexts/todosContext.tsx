@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react';
-import { getAllTodos, getTodos } from '../api/requests';
-import { todoType } from '../types';
+
+import { getAllTodos } from '../api/requests';
 import { ChildrenProps } from '../types/ChildrenProps';
-import cloneDeep from 'lodash';
+import { todoType } from '../types';
 
 interface todosType {
   [index: string]: todoType[];
