@@ -3,14 +3,14 @@ import CalanderContents from '../components/calander/CalanderContents';
 import CalanderHeader from '../components/calander/CalanderHeader';
 import '../components/calander/Calander.scss';
 import Todo from '../components/todo/Todo';
-import { ContextApi } from '../App';
 import { todosContext } from '../contexts/todosContext';
+import { drawerContext } from '../contexts/drawerContext';
 
 function Calander() {
   const [showYear, setShowYear] = useState(new Date().getFullYear());
   const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
-  const { todoDate, todoState, toggleTodoState, closeTodoState } =
-    useContext(ContextApi);
+  const { todoState, toggleTodoState, closeTodoState } =
+    useContext(drawerContext);
   const { dayList, updateDateList, updateTodos } = useContext(todosContext);
 
   const changeCalander = (dir: string) => {

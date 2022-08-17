@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from 'react';
 
 import { createTodo } from '../../api/requests';
-import { ContextApi } from '../../App';
+import { drawerContext } from '../../contexts/drawerContext';
 import { todosContext } from '../../contexts/todosContext';
 import TodoContent from './TodoContent';
 
@@ -9,7 +9,7 @@ import './Todo.scss';
 
 function Todo() {
   const [content, setContnet] = useState('');
-  const { todoDate } = useContext(ContextApi);
+  const { todoDate } = useContext(drawerContext);
   const { todos, updateTodos, dayList } = useContext(todosContext);
 
   const year = useMemo(() => String(todoDate.year), [todoDate]);

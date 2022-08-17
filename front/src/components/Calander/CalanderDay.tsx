@@ -1,11 +1,10 @@
 import { useContext, useMemo, useState } from 'react';
 
-import { ContextApi } from '../../App';
+import { drawerContext } from '../../contexts/drawerContext';
 import { todoType } from '../../types';
 import { updateTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
 import './Calander.scss';
-import CalanderDayTodo from './CalanderDayTodo';
 
 let targetDate = '';
 
@@ -17,7 +16,7 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
   const MONTH = useMemo(() => new Date().getMonth() + 1, []);
   const DAY = useMemo(() => new Date().getDate(), []);
 
-  const { openTodoState } = useContext(ContextApi);
+  const { openTodoState } = useContext(drawerContext);
   const { updateTodos } = useContext(todosContext);
   const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 
