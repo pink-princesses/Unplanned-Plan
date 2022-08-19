@@ -64,7 +64,7 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
           </div>
           <span
             className={
-              todos.length > 3
+              todos.length > 2
                 ? 'calander__addbtn nes-btn is-primary'
                 : 'calander__addbtn nes-btn'
             }
@@ -78,20 +78,23 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
       </div>
       <ul className={`calander__days__btn ${date}`}>
         {todos.length >= 1
-          ? todos.slice(0, 3).map((todo, idx) => (
-              <li
-                draggable="true"
-                className={
-                  todo.done
-                    ? 'todoContent done nes-container is-rounded'
-                    : 'todoContent nes-container is-rounded'
-                }
-                key={todo.id}
-                onDragEnd={() => end(todo.id, todo.content, todo.done)}
-              >
-                {todo.content}
-              </li>
-            ))
+          ? todos
+              .filter((t) => t.done !== true)
+              .slice(0, 2)
+              .map((todo, idx) => (
+                <li
+                  draggable="true"
+                  className={
+                    todo.done
+                      ? 'todoContent done nes-container is-rounded'
+                      : 'todoContent nes-container is-rounded'
+                  }
+                  key={todo.id}
+                  onDragEnd={() => end(todo.id, todo.content, todo.done)}
+                >
+                  {todo.content}
+                </li>
+              ))
           : null}
       </ul>
     </div>
