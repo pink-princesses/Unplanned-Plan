@@ -2,6 +2,7 @@ import { createContext, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.module.scss';
+import 'nes.css/css/nes.min.css';
 
 import Intro from './pages/Intro';
 import Calander from './pages/Calander';

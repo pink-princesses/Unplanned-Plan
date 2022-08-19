@@ -5,7 +5,6 @@ import { todoType } from '../../types';
 import { updateTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
 import './Calander.scss';
-import CalanderDayTodo from './CalanderDayTodo';
 
 let targetDate = '';
 
@@ -65,7 +64,9 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
           </div>
           <span
             className={
-              todos.length > 3 ? 'calander__addbtn many' : 'calander__addbtn'
+              todos.length > 3
+                ? 'calander__addbtn nes-btn is-primary'
+                : 'calander__addbtn nes-btn'
             }
             onClick={() => {
               openTodoState({ year, month, day });
@@ -80,7 +81,11 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
           ? todos.slice(0, 3).map((todo, idx) => (
               <li
                 draggable="true"
-                className={todo.done ? 'todoContent done' : 'todoContent'}
+                className={
+                  todo.done
+                    ? 'todoContent done nes-container is-rounded'
+                    : 'todoContent nes-container is-rounded'
+                }
                 key={todo.id}
                 onDragEnd={() => end(todo.id, todo.content, todo.done)}
               >
