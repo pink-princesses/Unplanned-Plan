@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
 .show {
   display: 'block';
 }
@@ -8,6 +12,11 @@
   color: blue;
   text-decoration: line-through;
 }
+.todo_done {
+  opacity: 0.3;
+  text-decoration: line-through;
+}
+
 .todos__todos h1 {
   font-weight: 700;
   font-size: 22px;
@@ -20,57 +29,49 @@
   flex-direction: column;
   scrollbar-width: none;
 
+  .header__date {
+    margin-bottom: 10px;
+  }
+
   .todos__input {
-    background-color: lightgrey;
+    display: flex;
     margin-bottom: 20px;
-    padding: 10px;
-    border-radius: 6px;
     flex: 1;
+    max-height: 50px;
+
+    .input__form {
+      flex: 2.5;
+    }
+    .submit__btn {
+      flex: 1;
+      margin-left: 10px;
+    }
   }
   .todos__todos {
     flex: 8;
     overflow: scroll;
     overflow-x: hidden;
   }
-  .todos__todos .header__date {
-    margin-bottom: 10px;
-  }
 
   .todos__contents {
-    border: 1px dotted black;
     margin-bottom: 16px;
+    padding-top: 16px;
+    padding-bottom: 10px;
+    border-image-repeat: stretch;
 
-    .todos__header {
-      display: flex;
-      justify-content: space-between;
-
-      .todos__delBtn {
-        margin-left: 20px;
-        cursor: pointer;
-      }
-      .todos__delBtn:hover {
-        color: red;
-      }
+    .todos__delBtn {
+      float: right;
+      font-weight: 700;
+    }
+    .todos__delBtn:hover {
+      color: red;
     }
 
     .todo__container {
-      // background-color: gray;
       margin-bottom: 10px;
-      cursor: default;
     }
   }
-
-  .todo__content {
-    cursor: pointer;
-  }
-  .todo__content:hover {
-    background-color: yellowgreen;
-  }
-
-  .submit__btn {
-    background-color: yellow;
-    border: 1px solid black;
-    padding: 10px 16px;
-    border-radius: 6px;
+  .todos__contents:hover {
+    background-color: rgba($color: #000000, $alpha: 0.1);
   }
 }

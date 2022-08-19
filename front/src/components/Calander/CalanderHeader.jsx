@@ -10,7 +10,7 @@ function CalanderHeader({ year, month, changeCalander }) {
       </h1>
       <div className="calander__header__btn__wrapper">
         <button
-          className="calander__header__btn btn__prev"
+          className="calander__header__btn nes-btn btn__prev"
           onClick={() => {
             changeCalander('prev');
           }}
@@ -18,7 +18,7 @@ function CalanderHeader({ year, month, changeCalander }) {
           &lt;
         </button>
         <button
-          className="calander__header__btn btn__next"
+          className="calander__header__btn nes-btn btn__next"
           onClick={() => {
             changeCalander('next');
           }}

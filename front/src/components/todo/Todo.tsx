@@ -28,18 +28,19 @@ function Todo() {
 
   return (
     <div className="todos__container">
+      <h1 className="header__date">{`${todoDate.month}월 ${todoDate.day}일에 할일 📚`}</h1>
       <div className="todos__input">
         <input
           placeholder="todo를 입력하세요"
+          className="nes-input input__form"
           onChange={(e) => setContnet(e.target.value)}
           value={content}
         />
-        <button onClick={handleSubmit} className="submit__btn">
+        <button onClick={handleSubmit} className="submit__btn nes-btn">
           작성완료
         </button>
       </div>
       <div className="todos__todos">
-        <h1 className="header__date">{`${todoDate.month}/${todoDate.day}`}</h1>
         {todos[date]
           ? todos[date].map((todo) => (
               <TodoContent todo={todo} key={todo.id} inputDate={date} />

@@ -56,12 +56,16 @@ function Calander() {
         />
         <CalanderContents thisMonth={showMonth} />
         <div
-          className={todoState ? 'togle_todo_btn' : 'togle_todo_btn hide'}
+          className={
+            todoState
+              ? 'togle_todo_btn nes-btn is-primary'
+              : 'togle_todo_btn nes-btn is-primary hide'
+          }
           onClick={() => {
             toggleTodoState();
           }}
         >
-          {todoState ? '투두닫어' : ''}
+          {todoState ? '닫기' : ''}
         </div>
       </div>
       <div className={todoState ? 'calander__todo' : 'calander__todo hide'}>
