@@ -31,27 +31,22 @@ function TodoContent({ todo, inputDate }: Props) {
   };
 
   return (
-    <div className="todos__contents">
+    <div
+      className={
+        todo.done
+          ? 'todos__contents nes-container is-rounded todo_done'
+          : 'todos__contents nes-container is-rounded'
+      }
+    >
       <div className="todos__header">
-        <span>
-          {`${todo.created_at.slice(0, 10)} ${todo.created_at.slice(11, 19)}`}
-        </span>
         <span className="todos__delBtn" onClick={handleDelete}>
-          X
+          ×
         </span>
       </div>
       <div className="todo__container">
-        <div
-          className={todo.done ? 'todo__content done' : 'todo__content'}
-          onClick={handleDone}
-        >
+        <div className="todo__content" onClick={handleDone}>
           {todoContent}
         </div>
-        <p>{todo.date}</p>
-        <p>{`${todo.updated_at.slice(0, 10)} ${todo.updated_at.slice(
-          11,
-          19,
-        )}`}</p>
       </div>
     </div>
   );

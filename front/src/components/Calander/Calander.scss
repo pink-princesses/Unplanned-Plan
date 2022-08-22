@@ -8,10 +8,6 @@
   display: hide !important;
 }
 
-.many {
-  background-color: pink !important;
-}
-
 .done {
   text-decoration: line-through !important;
 }
@@ -27,9 +23,10 @@
 
 .calander {
   padding: 60px;
+  padding-top: 20px;
   display: flex;
   box-sizing: border-box;
-  border: 1px solid red;
+  // border: 1px solid red;
   height: 937px;
 }
 
@@ -40,6 +37,7 @@
   .calander__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
   }
   .calander__header__title {
@@ -47,28 +45,26 @@
   }
   .calander__header__btn__wrapper {
     display: flex;
-    height: 30px;
+    height: 40px;
   }
   .calander__header__btn {
-    border: 1px solid #cacaca;
-    border-radius: 4px;
+    line-height: 15px;
   }
   .btn__prev {
     flex: 1;
     padding: 0 10px;
-    cursor: pointer;
+    margin-right: 8px;
   }
   .btn__next {
     flex: 1;
     padding: 0 10px;
-    cursor: pointer;
   }
 
   .calander__dayOfWeek__wrapper {
     box-sizing: border-box;
     display: flex;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     // border: 1px solid blue;
   }
   .calander__dayOfWeek__days {
@@ -94,19 +90,25 @@
   .calander__days {
     box-sizing: border-box;
     width: calc(100% / 7);
-    height: 142px;
+    height: 152px;
     text-align: right;
     padding: 12px;
-    // padding-bottom: 80px;
-    border-top: 1px solid rgba(0, 0, 0, 0.4);
-    border-right: 1px solid rgba(0, 0, 0, 0.4);
+    padding-top: 6px;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
     display: flex;
     flex-direction: column;
     background-color: white;
   }
+  .calander__days:nth-child(n + 29) {
+    border-bottom: 4px solid black;
+  }
+  .calander__days:nth-child(n + 36) {
+    border-top: 0;
+  }
   .calander__days:nth-child(7n) {
     background-color: #f5f5f5;
-    border-right: 0;
+    border-right: 4px solid black;
     color: rgba(0, 0, 0, 0.4);
   }
   .calander__days:nth-child(7n + 1) {
@@ -117,7 +119,7 @@
   .calander__days__top {
     display: flex;
     justify-content: space-between;
-    margin-top: 2px;
+    // margin-top: 2px;
     margin-bottom: 6px;
 
     .day__highlight {
@@ -125,7 +127,7 @@
       color: #fff;
       background-color: red;
       border-radius: 100%;
-      padding: 2px 8.8px;
+      padding: 2px 4.5px;
     }
     .day__status {
       margin-left: 8px;
@@ -139,23 +141,26 @@
     width: 100%;
     height: 100%;
     color: black;
-    margin: 4px 0;
-    border-radius: 4px;
-    padding: 4px 6px;
+    margin: 6px 0;
+    padding: 0;
     background-color: rgba(0, 0, 0, 0.09);
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: grab;
+    border-image-repeat: stretch;
   }
 
   .calander__addbtn {
-    color: rgba(0, 0, 0, 0.4);
-    background-color: rgba(0, 0, 0, 0.08);
-    border-radius: 3px;
-    padding: 2px 5px;
-    cursor: pointer;
+    max-height: 22px;
+    line-height: 10px;
+    text-align: center;
+    color: #000;
+    padding: 0px;
+    border-image-repeat: stretch;
+  }
+  .calander__addbtn:hover {
+    color: #000;
   }
 }
 
@@ -165,9 +170,15 @@
 
 .togle_todo_btn {
   position: absolute;
-  top: 40%;
-  right: 30px;
+  top: 50%;
+  right: 0;
   width: 4rem;
   height: 4rem;
-  background-color: aqua;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  line-height: 2.6rem;
+  opacity: 0.5;
+}
+.togle_todo_btn:hover {
+  opacity: 1;
 }
