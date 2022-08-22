@@ -1,19 +1,21 @@
-import { useContext, useEffect, useRef } from 'react';
+import { useContext } from 'react';
 
-import CalanderDOW from './CalanderDOW';
 import CalanderDay from './CalanderDay';
+
 import { todosContext } from '../../contexts/todosContext';
 import './Calander.scss';
 
-function CalanderContents(props: any) {
+function CalanderContents({ thisMonth }: Props) {
   const dayOftheWeek = ['일', '월', '화', '수', '목', '금', '토'];
   const { todos, dayList } = useContext(todosContext);
 
   return (
     <>
       <div className="calander__dayOfWeek__wrapper">
-        {dayOftheWeek.map((dow, idx) => (
-          <CalanderDOW dayOfWeek={dow} key={idx} />
+        {dayOftheWeek.map((dow) => (
+          <div key={dow} className="calander__dayOfWeek__days">
+            {dow}
+          </div>
         ))}
       </div>
       <div className="calander__days__wrapper">
@@ -24,7 +26,7 @@ function CalanderContents(props: any) {
                 key={date}
                 date={date}
                 todos={todos[date]}
-                thisMonth={props.thisMonth}
+                thisMonth={thisMonth}
               />
             ),
         )}
@@ -34,3 +36,7 @@ function CalanderContents(props: any) {
 }
 
 export default CalanderContents;
+
+interface Props {
+  thisMonth: number;
+}

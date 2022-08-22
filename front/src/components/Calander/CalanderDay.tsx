@@ -1,6 +1,6 @@
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 
-import { ContextApi } from '../../App';
+import { drawerContext } from '../../contexts/drawerContext';
 import { todoType } from '../../types';
 import { updateTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
@@ -15,27 +15,32 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
 
   const MONTH = useMemo(() => new Date().getMonth() + 1, []);
   const DAY = useMemo(() => new Date().getDate(), []);
+  const DAY_STATUS = useMemo(() => ['🤯BUSY', '😵CRIZY', '👿HELL'], []);
 
-  const { openTodoState } = useContext(ContextApi);
+  const { openTodoState } = useContext(drawerContext);
   const { updateTodos } = useContext(todosContext);
-  const dayStatus = ['🤯BUSY', '😵CRIZY', '👿HELL'];
 
-  const end = async (id: number, content: string, done: boolean) => {
-    await updateTodo(id, content, done, targetDate);
-    await updateTodos();
+  const dropHandler = async (id: number, content: string, done: boolean) => {
+    try {
+      await updateTodo(id, content, done, targetDate);
+      await updateTodos();
+      targetDate = '';
+    } catch (error) {
+      alert('일정 변경에 실패했습니다');
+    }
   };
 
-  const changeTargetDate = (e: any) => {
+  const dragHandler = (e: any) => {
     const target = e.target;
     if (!target.tagName) return;
-
     if (target.tagName === 'UL' || target.tagName === 'DIV')
       targetDate = e.target.classList[1];
   };
+
   return (
     <div
       className={`calander__days ${date}`}
-      onDrop={(e) => changeTargetDate(e)}
+      onDrop={(e) => dragHandler(e)}
       onDragOver={(e) => e.preventDefault()}
     >
       <div
@@ -54,11 +59,11 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
             </span>
             <span className="day__status">
               {todos.length >= 10
-                ? dayStatus[2]
+                ? DAY_STATUS[2]
                 : 10 > todos.length && todos.length >= 6
-                ? dayStatus[1]
+                ? DAY_STATUS[1]
                 : 6 > todos.length && todos.length > 3
-                ? dayStatus[0]
+                ? DAY_STATUS[0]
                 : ''}
             </span>
           </div>
@@ -90,7 +95,9 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
                       : 'todoContent nes-container is-rounded'
                   }
                   key={todo.id}
-                  onDragEnd={() => end(todo.id, todo.content, todo.done)}
+                  onDragEnd={() =>
+                    dropHandler(todo.id, todo.content, todo.done)
+                  }
                 >
                   {todo.content}
                 </li>

@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import IntroConffeti from './IntroConffeti';
 
 import './IntroContents.scss';
-import IntroConffeti from './IntroConffeti';
-import { useNavigate } from 'react-router-dom';
 
 export default function IntroContents() {
   const navigate = useNavigate();

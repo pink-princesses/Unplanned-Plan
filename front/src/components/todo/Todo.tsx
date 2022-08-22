@@ -1,15 +1,16 @@
 import { useState, useContext, useMemo } from 'react';
 
-import { createTodo } from '../../api/requests';
-import { ContextApi } from '../../App';
-import { todosContext } from '../../contexts/todosContext';
 import TodoContent from './TodoContent';
+
+import { createTodo } from '../../api/requests';
+import { drawerContext } from '../../contexts/drawerContext';
+import { todosContext } from '../../contexts/todosContext';
 
 import './Todo.scss';
 
 function Todo() {
   const [content, setContnet] = useState('');
-  const { todoDate } = useContext(ContextApi);
+  const { todoDate } = useContext(drawerContext);
   const { todos, updateTodos, dayList } = useContext(todosContext);
 
   const year = useMemo(() => String(todoDate.year), [todoDate]);
@@ -21,8 +22,12 @@ function Todo() {
   const date = useMemo(() => `${year}${month}${day}`, [todoDate]);
 
   const handleSubmit = async () => {
-    await createTodo(content, false, date);
-    await updateTodos();
+    try {
+      await createTodo(content, false, date);
+      await updateTodos();
+    } catch (error) {
+      alert('추가하지 못했습니다');
+    }
     setContnet('');
   };
 
