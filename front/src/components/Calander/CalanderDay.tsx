@@ -24,6 +24,7 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
     try {
       await updateTodo(id, content, done, targetDate);
       await updateTodos();
+      targetDate = '';
     } catch (error) {
       alert('일정 변경에 실패했습니다');
     }
