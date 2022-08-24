@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { debounce } from 'lodash';
 
 import { updateTodo, deleteTodo } from '../../api/requests';
@@ -6,7 +6,7 @@ import { todosContext } from '../../contexts/todosContext';
 import { todoType } from '../../types';
 
 function TodoContent({ todo, inputDate }: Props) {
-  const [todoContent, setTodoContent] = useState(todo.content);
+  const todoContent = useMemo(() => todo.content, []);
   const { updateTodos } = useContext(todosContext);
 
   const handleDone = debounce(async () => {
@@ -38,16 +38,12 @@ function TodoContent({ todo, inputDate }: Props) {
           : 'todos__contents nes-container is-rounded'
       }
     >
-      <div className="todos__header">
-        <span className="todos__delBtn" onClick={handleDelete}>
-          ×
-        </span>
-      </div>
-      <div className="todo__container">
-        <div className="todo__content" onClick={handleDone}>
-          {todoContent}
-        </div>
-      </div>
+      <button className="todos__delBtn" onClick={handleDelete}>
+        ×
+      </button>
+      <p className="todo__content" onClick={handleDone}>
+        {todoContent}
+      </p>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { createContext, useState } from 'react';
 
+import { getPrevMonthDate, getThisMonthDate, getNextMonthDate } from '../utils';
 import { getAllTodos } from '../api/requests';
 import { ChildrenProps } from '../types/ChildrenProps';
 import { todoType } from '../types';
@@ -10,7 +11,7 @@ interface todosType {
 
 export const todosContext = createContext({
   todos: {} as todosType,
-  updateDateList: (thisYear: number, thisMonth: number) => {},
+  updateDateList: (year: number, month: number) => {},
   updateTodos: async () => {},
   dayList: [''],
 });
@@ -19,28 +20,21 @@ export default function TodosProvider({ children }: ChildrenProps) {
   const [todos, setTodos] = useState<todosType>({});
   const [dayList, setDayList] = useState<string[]>([]);
 
-  const updateDateList = (thisYear: number, thisMonth: number) => {
-    const prevMonthLastDate = new Date(thisYear, thisMonth - 1, 0).getDate();
-    const prevMonthLastDayOfWeek = new Date(
-      thisYear,
-      thisMonth - 1,
-      0,
-    ).getDay();
-    const nextMonthLastDate = new Date(thisYear, thisMonth, 0).getDate();
-    const nextMonthFirstDayOfWeek = new Date(thisYear, thisMonth, 0).getDay();
+  const updateDateList = (year: number, month: number) => {
+    const prevMonthLastDate = new Date(year, month - 1, 0).getDate();
+    const prevMonthLastDayOfWeek = new Date(year, month - 1, 0).getDay();
+    const thisMonthLastDate = new Date(year, month, 0).getDate();
+    const thisMonthFirstDayOfWeek = new Date(year, month, 0).getDay();
+
     const prevDays = getPrevMonthDate(
-      thisYear,
-      thisMonth - 1,
+      year,
+      month - 1,
       prevMonthLastDayOfWeek,
       prevMonthLastDate,
     );
+    const nextDays = getNextMonthDate(year, month + 1, thisMonthFirstDayOfWeek);
+    const nowDays = getThisMonthDate(year, month, thisMonthLastDate);
 
-    const nextDays = getNextMonthDate(
-      thisYear,
-      thisMonth + 1,
-      nextMonthFirstDayOfWeek,
-    );
-    const nowDays = getThisMonthDate(thisYear, thisMonth, nextMonthLastDate);
     const tmpDateList = [...prevDays, ...nowDays, ...nextDays];
     setDayList(tmpDateList);
   };
@@ -48,6 +42,7 @@ export default function TodosProvider({ children }: ChildrenProps) {
   const updateTodos = async () => {
     const firstDate = dayList[0];
     const lastDate = dayList[dayList.length - 1];
+
     if (!firstDate || !lastDate) return;
     const tmpTodos = {} as todosType;
 
@@ -66,44 +61,4 @@ export default function TodosProvider({ children }: ChildrenProps) {
   return (
     <todosContext.Provider value={value}>{children}</todosContext.Provider>
   );
-}
-
-function getPrevMonthDate(
-  year: number,
-  month: number,
-  lastDay: number,
-  lastDate: number,
-) {
-  const result = [];
-  if (lastDay !== 6) {
-    for (let i = 0; i < lastDay + 1; i++) {
-      result.unshift(
-        `${year}` + `${month}`.padStart(2, '0') + `${lastDate - i}`,
-      );
-    }
-  }
-
-  return result;
-}
-
-function getNextMonthDate(year: number, month: number, lastDay: number) {
-  const result = [];
-  for (let i = 1; i < 7 - lastDay; i++) {
-    result.push(
-      `${year}` + `${month}`.padStart(2, '0') + `${i}`.padStart(2, '0'),
-    );
-  }
-
-  return result;
-}
-
-function getThisMonthDate(year: number, month: number, lastDate: number) {
-  const result = [];
-  for (let i = 1; i <= lastDate; i++) {
-    result.push(
-      `${year}` + `${month}`.padStart(2, '0') + `${i}`.padStart(2, '0'),
-    );
-  }
-
-  return result;
 }

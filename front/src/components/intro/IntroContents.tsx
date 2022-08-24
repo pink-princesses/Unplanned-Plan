@@ -1,36 +1,13 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import IntroConffeti from './IntroConffeti';
+import { openGoogleLoginPage } from '../../utils';
 
 import './IntroContents.scss';
 
 export default function IntroContents() {
   const navigate = useNavigate();
-
-  const openGoogleLoginPage = useCallback(() => {
-    const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-    const redirectUri = 'api/v1/auth/login/google/';
-
-    const scope = [
-      'https://www.googleapis.com/auth/userinfo.email',
-      'https://www.googleapis.com/auth/userinfo.profile',
-    ].join(' ');
-
-    const params = {
-      response_type: 'code',
-      client_id:
-        '310763754913-02lvsola05qlakebccaqpi9km0kj8qlu.apps.googleusercontent.com',
-      redirect_uri: `${'http://localhost:8000'}/${redirectUri}`,
-      prompt: 'select_account',
-      access_type: 'offline',
-      scope,
-    };
-
-    const urlParams = new URLSearchParams(params).toString();
-
-    window.location = `${googleAuthUrl}?${urlParams}` as (string | Location) &
-      Location;
-  }, []);
+  const clickHandler = useCallback(openGoogleLoginPage, []);
 
   useEffect(() => {
     if (localStorage.getItem('jwt')) navigate('/calander');
@@ -45,11 +22,8 @@ export default function IntroContents() {
         <p className="Intro__content">계획은 미뤄야 제 맛</p>
         <p className="Intro__content">우리가 만든 결과는 늘 괜찮았어요</p>
       </div>
-      <button
-        className="Login__googleBtn"
-        onClick={openGoogleLoginPage}
-      ></button>
-      <IntroConffeti />
+      <button className="Login__googleBtn" onClick={clickHandler}></button>
+      {/* <IntroConffeti /> */}
     </div>
   );
 }
