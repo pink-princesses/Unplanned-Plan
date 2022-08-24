@@ -2,6 +2,15 @@ import { axiosInstance } from './index';
 
 const api = axiosInstance;
 
+api.interceptors.request.use(function (config) {
+  const jwtToken = localStorage.getItem('jwt');
+  const refreshToken = localStorage.getItem('refresh');
+
+  config.headers.jwt = jwtToken;
+  config.headers.refresh = refreshToken;
+  return config;
+});
+
 /**
  *
  * @todo jwt 토큰 만료되었을 때 수신되는 jwt 토큰 데이터 local storage에 저장하는 로직 추가

@@ -16,6 +16,10 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
   const MONTH = useMemo(() => new Date().getMonth() + 1, []);
   const DAY = useMemo(() => new Date().getDate(), []);
   const DAY_STATUS = useMemo(() => ['🤯BUSY', '😵CRIZY', '👿HELL'], []);
+  const DONE_COUNT = useMemo(
+    () => todos.filter((todo) => todo.done === false).length,
+    [todos],
+  );
 
   const { openTodoState } = useContext(drawerContext);
   const { updateTodos } = useContext(todosContext);
@@ -40,7 +44,7 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
   return (
     <div
       className={`calander__days ${date}`}
-      onDrop={(e) => dragHandler(e)}
+      onDragEnter={(e) => dragHandler(e)}
       onDragOver={(e) => e.preventDefault()}
     >
       <div
@@ -58,18 +62,18 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
               {day}
             </span>
             <span className="day__status">
-              {todos.length >= 10
+              {DONE_COUNT >= 10
                 ? DAY_STATUS[2]
-                : 10 > todos.length && todos.length >= 6
+                : 10 > DONE_COUNT && DONE_COUNT >= 6
                 ? DAY_STATUS[1]
-                : 6 > todos.length && todos.length > 3
+                : 6 > DONE_COUNT && DONE_COUNT > 3
                 ? DAY_STATUS[0]
                 : ''}
             </span>
           </div>
           <span
             className={
-              todos.length > 2
+              DONE_COUNT > 2
                 ? 'calander__addbtn nes-btn is-primary'
                 : 'calander__addbtn nes-btn'
             }
@@ -85,21 +89,18 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
         {todos.length >= 1
           ? todos
               .filter((t) => t.done !== true)
-              .slice(0, 2)
+              .slice(0, 4)
               .map((todo, idx) => (
                 <li
                   draggable="true"
-                  className={
-                    todo.done
-                      ? 'todoContent done nes-container is-rounded'
-                      : 'todoContent nes-container is-rounded'
-                  }
+                  className={todo.done ? 'todoContent done' : 'todoContent'}
                   key={todo.id}
                   onDragEnd={() =>
                     dropHandler(todo.id, todo.content, todo.done)
                   }
                 >
-                  {todo.content}
+                  <span className="dot"></span>
+                  <span className="contents">{todo.content}</span>
                 </li>
               ))
           : null}

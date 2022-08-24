@@ -11,7 +11,7 @@ import { drawerContext } from '../contexts/drawerContext';
 function Calander() {
   const [showYear, setShowYear] = useState(new Date().getFullYear());
   const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
-  const { todoState, toggleTodoState } = useContext(drawerContext);
+  const { todoState } = useContext(drawerContext);
   const { dayList, updateDateList, updateTodos } = useContext(todosContext);
 
   useEffect(() => {
@@ -36,18 +36,6 @@ function Calander() {
           setShowMonth={setShowMonth}
         />
         <CalanderContents thisMonth={showMonth} />
-        <div
-          className={
-            todoState
-              ? 'togle_todo_btn nes-btn is-primary'
-              : 'togle_todo_btn nes-btn is-primary hide'
-          }
-          onClick={() => {
-            toggleTodoState();
-          }}
-        >
-          {todoState ? '닫기' : ''}
-        </div>
       </div>
       <div className={todoState ? 'calander__todo' : 'calander__todo hide'}>
         <Todo />

@@ -17,7 +17,6 @@ function CalanderHeader({
         } else {
           setShowMonth((pre) => pre - 1);
         }
-        closeTodoState();
         break;
       case 'next':
         if (showMonth >= 12) {
@@ -26,7 +25,6 @@ function CalanderHeader({
         } else {
           setShowMonth((pre) => pre + 1);
         }
-        closeTodoState();
         break;
     }
   };
@@ -38,7 +36,7 @@ function CalanderHeader({
       </h1>
       <div className="calander__header__btn__wrapper">
         <button
-          className="calander__header__btn btn__prev"
+          className="calander__header__btn nes-btn btn__prev"
           onClick={() => {
             changeCalander('prev');
           }}
@@ -46,7 +44,7 @@ function CalanderHeader({
           &lt;
         </button>
         <button
-          className="calander__header__btn btn__next"
+          className="calander__header__btn nes-btn btn__next"
           onClick={() => {
             changeCalander('next');
           }}

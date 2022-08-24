@@ -2,7 +2,11 @@ import React, { createContext, useState } from 'react';
 
 const initialValue: initialValueType = {
   todoState: false,
-  todoDate: { year: 0, month: 0, day: 0 },
+  todoDate: {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    day: new Date().getDate(),
+  },
   openTodoState: () => {},
   toggleTodoState: () => {},
   closeTodoState: () => {},
@@ -19,13 +23,13 @@ interface initialValueType {
 }
 
 export default function DrawerProvider({ children }: Props) {
-  const [todoState, settodoState] = useState(false);
+  const [todoState, settodoState] = useState(true);
   const [todoDate, setTodoDate] = useState(initialValue.todoDate);
   const openTodoState = (date: todoDateType) => {
     setTodoDate(date);
-    settodoState(() => {
-      return true;
-    });
+    // settodoState(() => {
+    //   return true;
+    // });
   };
   const toggleTodoState = () => {
     settodoState((prev) => {
