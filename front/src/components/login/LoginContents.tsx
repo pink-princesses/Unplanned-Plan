@@ -16,7 +16,6 @@ export default function LoginContents() {
       localStorage.setItem('jwt', jwt);
       localStorage.setItem('refresh', refresh);
 
-      if (localStorage.getItem('jwt')) console.log('있음');
       navigate('/calander');
     } else {
       alert('로그인 할 수 없습니다.');
