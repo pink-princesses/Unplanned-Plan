@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import IntroConffeti from './IntroConffeti';
 import { openGoogleLoginPage } from '../../utils';
 
 import './IntroContents.scss';
@@ -23,7 +22,6 @@ export default function IntroContents() {
         <p className="Intro__content">우리가 만든 결과는 늘 괜찮았어요</p>
       </div>
       <button className="Login__googleBtn" onClick={clickHandler}></button>
-      {/* <IntroConffeti /> */}
     </div>
   );
 }
