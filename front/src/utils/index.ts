@@ -14,7 +14,7 @@ export function openGoogleLoginPage() {
     response_type: 'code',
     client_id:
       '310763754913-02lvsola05qlakebccaqpi9km0kj8qlu.apps.googleusercontent.com',
-    redirect_uri: `${'http://ec2-3-35-11-192.ap-northeast-2.compute.amazonaws.com'}/${redirectUri}`,
+    redirect_uri: `${'http://unplanned-plan.shop'}/${redirectUri}`,
     prompt: 'select_account',
     access_type: 'offline',
     scope,

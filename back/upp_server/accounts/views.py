@@ -21,7 +21,7 @@ def google_login(request):
 
 		if error or not code:
 				params = urlencode({'error': error})
-				return HttpResponseRedirect(f'http://localhost:3000?{params}')
+				return HttpResponseRedirect(f'http://unplanned-plan.shop?{params}')
 
 		access_token = google_get_access_token(code)
 		
@@ -48,7 +48,7 @@ def google_login(request):
 
 		params = urlencode({'jwt': jwt_token, 'refresh': refresh_token})
 
-		return HttpResponseRedirect(f'http://localhost:3000/login?{params}')
+		return HttpResponseRedirect(f'http://unplanned-plan.shop/login?{params}')
 
 
 @require_http_methods(["POST"])

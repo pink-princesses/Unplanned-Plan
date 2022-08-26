@@ -5,7 +5,6 @@ from django.forms import ValidationError
 # modules
 import env
 
-
 def google_get_access_token(code: str):
 		data = {
 				'code': code,

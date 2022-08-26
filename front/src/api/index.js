@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://3.35.11.192:8000/';
+const BASE_URL = 'http://unplanned-plan.shop/';
 
 const createAxiosInstance = () => {
   const axiosInstance = axios.create({
