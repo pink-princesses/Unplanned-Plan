@@ -2,7 +2,7 @@
   "name": "unplanned-plan",
   "version": "0.1.0",
   "private": true,
-  "main": "public/Main.js",
+  "main": "public/electron.js",
   "homepage": "./",
   "proxy": "http://localhost:8000",
   "dependencies": {
@@ -24,7 +24,7 @@
     "eject": "react-scripts eject",
     "react-start": "set BROWSER=none && npm run start",
     "electron-start": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
-    "electron-pack": "npm build && electron-builder build -c.extraMetadata.main=build/Main.js"
+    "electron-pack": "npm run build && electron-builder build -c.extraMetadata.main=build/Main.js"
   },
   "eslintConfig": {
     "extends": "react-app"
