@@ -2,7 +2,7 @@
   "name": "unplanned-plan",
   "version": "0.1.0",
   "private": true,
-  "main": "public/Main.js",
+  "main": "public/electron.js",
   "homepage": "./",
   "proxy": "http://localhost:8000",
   "dependencies": {
