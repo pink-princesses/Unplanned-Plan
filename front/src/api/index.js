@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://unplanned-plan.shop/';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const createAxiosInstance = () => {
   const axiosInstance = axios.create({

@@ -5,16 +5,14 @@ import { getAllTodos } from '../api/requests';
 import { ChildrenProps } from '../types/ChildrenProps';
 import { todoType } from '../types';
 
-interface todosType {
-  [index: string]: todoType[];
-}
-
-export const todosContext = createContext({
+const initialValue: initialValueType = {
   todos: {} as todosType,
   updateDateList: (year: number, month: number) => {},
-  updateTodos: async () => {},
+  updateTodos: async () => true,
   dayList: [''],
-});
+};
+
+export const todosContext = createContext(initialValue);
 
 export default function TodosProvider({ children }: ChildrenProps) {
   const [todos, setTodos] = useState<todosType>({});
@@ -53,7 +51,7 @@ export default function TodosProvider({ children }: ChildrenProps) {
       response.forEach((el: todoType) => tmpTodos[el.date].push(el));
       setTodos(tmpTodos);
     } catch (error) {
-      alert('TODO LIST를 불러오지 못했습니다');
+      throw new Error('fail');
     }
   };
 
@@ -61,4 +59,15 @@ export default function TodosProvider({ children }: ChildrenProps) {
   return (
     <todosContext.Provider value={value}>{children}</todosContext.Provider>
   );
+}
+
+interface todosType {
+  [index: string]: todoType[];
+}
+
+interface initialValueType {
+  todos: todosType;
+  updateDateList: (year: number, month: number) => void;
+  updateTodos: () => any;
+  dayList: string[];
 }

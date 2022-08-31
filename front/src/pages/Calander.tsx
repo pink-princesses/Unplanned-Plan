@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CalanderContents from '../components/Calander/CalanderContents';
 import CalanderHeader from '../components/Calander/CalanderHeader';
@@ -9,6 +10,8 @@ import '../components/Calander/Calander.scss';
 import { drawerContext } from '../contexts/drawerContext';
 
 function Calander() {
+  const navigate = useNavigate();
+
   const [showYear, setShowYear] = useState(new Date().getFullYear());
   const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
   const { todoState } = useContext(drawerContext);
@@ -19,11 +22,15 @@ function Calander() {
   }, [showYear, showMonth]);
 
   useEffect(() => {
-    try {
-      (async () => await updateTodos())();
-    } catch (error) {
-      alert('TODO LIST를 불러오지 못했습니다');
-    }
+    (async () => {
+      try {
+        await updateTodos();
+      } catch (error) {
+        alert('TODO LIST를 불러오지 못했습니다.');
+        localStorage.clear();
+        navigate('/');
+      }
+    })();
   }, [dayList]);
 
   return (
