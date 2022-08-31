@@ -13,8 +13,7 @@ export function openGoogleLoginPage() {
 
   const params = {
     response_type: 'code',
-    client_id:
-      '310763754913-02lvsola05qlakebccaqpi9km0kj8qlu.apps.googleusercontent.com',
+    client_id: process.env.REACT_APP_GCP_CLIENT_ID as string,
     redirect_uri: `${process.env.REACT_APP_BASE_URL}/${redirectUri}`,
     prompt: 'select_account',
     access_type: 'offline',
