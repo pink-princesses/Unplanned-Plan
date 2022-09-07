@@ -559,3 +559,4 @@ pip-selfcheck.json
 env.py
 .ide
 .vscode
+.env.local

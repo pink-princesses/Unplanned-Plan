@@ -2,7 +2,6 @@
  * 구글 로그인 폼 redirect 함수
  */
 export function openGoogleLoginPage() {
-  console.log(process.env.REACT_APP_BASE_URL);
   const googleAuthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
   const redirectUri = 'api/v1/auth/login/google/';
 
@@ -13,9 +12,8 @@ export function openGoogleLoginPage() {
 
   const params = {
     response_type: 'code',
-    client_id:
-      '406413693173-2ncdnooq5mq23vk9pqs0rlo3kjj97vh8.apps.googleusercontent.com',
-    redirect_uri: `http://unplanned-plan.shop/${redirectUri}`,
+    client_id: process.env.REACT_APP_GCP_CLIENT_ID as string,
+    redirect_uri: `${process.env.REACT_APP_BASE_URL}/${redirectUri}`,
     prompt: 'select_account',
     access_type: 'offline',
     scope,
