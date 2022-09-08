@@ -5,6 +5,8 @@ import { updateTodo, deleteTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
 import { todoType } from '../../types';
 
+import '../../styles/TodoContents.scss';
+
 function TodoContent({ todo, inputDate }: Props) {
   const todoContent = useMemo(() => todo.content, []);
   const { updateTodos } = useContext(todosContext);

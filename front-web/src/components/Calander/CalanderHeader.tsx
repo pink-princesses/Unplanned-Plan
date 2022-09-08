@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { drawerContext } from '../../contexts/drawerContext';
+import '../../styles/CalanderHeader.scss';
 
 function CalanderHeader({
   showYear,

@@ -1,0 +1,28 @@
+.calander__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.calander__header__title {
+  font-size: 4.5vh;
+}
+.calander__header__btn__wrapper {
+  display: flex;
+  height: 40px;
+}
+.calander__header__btn {
+  line-height: 15px;
+}
+.btn__prev {
+  flex: 1;
+  padding: 0 10px;
+  margin-right: 8px;
+}
+.btn__next {
+  flex: 1;
+  padding: 0 10px;
+}
+.calander__header__btn {
+  line-height: 15px;
+}

@@ -6,7 +6,7 @@ import CalanderHeader from '../components/Calander/CalanderHeader';
 import Todo from '../components/todo/Todo';
 
 import { todosContext } from '../contexts/todosContext';
-import '../components/Calander/Calander.scss';
+import '../styles/Calander.scss';
 import { drawerContext } from '../contexts/drawerContext';
 
 function Calander() {

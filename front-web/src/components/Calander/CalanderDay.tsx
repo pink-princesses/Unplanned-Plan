@@ -4,7 +4,7 @@ import { drawerContext } from '../../contexts/drawerContext';
 import { todoType } from '../../types';
 import { updateTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
-import './Calander.scss';
+import '../../styles/CalanderDay.scss';
 
 let targetDate = '';
 

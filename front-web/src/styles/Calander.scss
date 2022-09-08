@@ -1,0 +1,17 @@
+.calander {
+  position: relative;
+  padding: 60px;
+  padding-top: 20px;
+  display: flex;
+  box-sizing: border-box;
+  height: 937px;
+}
+
+.calander__container {
+  width: 100%;
+  flex: 3.5;  
+}
+
+.calander__todo {
+  flex: 1;
+}

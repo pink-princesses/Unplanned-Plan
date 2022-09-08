@@ -6,7 +6,7 @@ import { createTodo } from '../../api/requests';
 import { drawerContext } from '../../contexts/drawerContext';
 import { todosContext } from '../../contexts/todosContext';
 
-import './Todo.scss';
+import '../../styles/Todo.scss';
 
 function Todo() {
   const [content, setContnet] = useState('');
