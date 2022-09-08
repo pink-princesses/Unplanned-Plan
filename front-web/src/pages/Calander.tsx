@@ -3,18 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 import CalanderContents from '../components/Calander/CalanderContents';
 import CalanderHeader from '../components/Calander/CalanderHeader';
-import Todo from '../components/todo/Todo';
 
 import { todosContext } from '../contexts/todosContext';
 import '../styles/Calander.scss';
-import { drawerContext } from '../contexts/drawerContext';
 
 function Calander() {
   const navigate = useNavigate();
 
   const [showYear, setShowYear] = useState(new Date().getFullYear());
   const [showMonth, setShowMonth] = useState(new Date().getMonth() + 1);
-  const { todoState } = useContext(drawerContext);
   const { dayList, updateDateList, updateTodos } = useContext(todosContext);
 
   useEffect(() => {
@@ -35,7 +32,6 @@ function Calander() {
 
   return (
     <div className="calander">
-      {/* <div className="calander__container"> */}
       <CalanderHeader
         showYear={showYear}
         showMonth={showMonth}
@@ -43,10 +39,6 @@ function Calander() {
         setShowMonth={setShowMonth}
       />
       <CalanderContents thisMonth={showMonth} />
-      {/* </div> */}
-      {/* <div className={todoState ? 'calander__todo' : 'calander__todo hide'}>
-        <Todo />
-      </div> */}
     </div>
   );
 }

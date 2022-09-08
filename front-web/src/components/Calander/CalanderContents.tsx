@@ -22,12 +22,7 @@ function CalanderContents({ thisMonth }: Props) {
         {dayList.map(
           (date) =>
             todos[date] && (
-              <CalanderDay
-                key={date}
-                date={date}
-                todos={todos[date]}
-                thisMonth={thisMonth}
-              />
+              <CalanderDay key={date} date={date} todos={todos[date]} />
             ),
         )}
       </div>

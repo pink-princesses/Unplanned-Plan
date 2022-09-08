@@ -1,20 +1,11 @@
-.calander__days__wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 10px;
-}
 .calander__days {
-  box-sizing: border-box;
+  position: relative;
   width: calc(100% / 7);
   height: 200px;
-  text-align: right;
-  padding: 4px;
   border-top: 4px solid black;
   border-left: 4px solid black;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-
+  box-sizing: border-box;
+  
   &:nth-child(n + 29) {
     border-bottom: 4px solid black;
   }
@@ -30,14 +21,35 @@
     background-color: #f5f5f5;
     color: rgba(0, 0, 0, 0.4);
   }
+  
+  .flexable_box {
+    position: absolute;
+    width: 100%;
+    padding: 4px;
+    z-index: 100;
+
+    &.stretch {
+      width: 150%;
+      min-height: 300px;
+      top: -50px;
+      right: -50px;
+      z-index: 1000;
+      background-color: #fff;
+      border: 5px solid #000;
+    }
+
+    &.moving {
+      opacity: .1;
+    }
+  }
 }
 
 .calander__days__top {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 
-  .day__highlight {
+  .highlight {
     box-sizing: border-box;
     color: #fff;
     background-color: red;
@@ -64,10 +76,29 @@
 .contents {
   display: flex;
   flex-direction: column;
-  .content {
+  margin-bottom: 0;
+  .item {
+    display: flex;
+    justify-content: space-between;
     margin: 1px 0;
     text-align: left;
     border-image-repeat: stretch;
+
+    & > * {
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .content {
+      width: 97%;
+      margin-right: 5px;
+      background-color: #cde0e6;
+      &:hover {
+        color: white;
+        background-color: #209cee;
+      }
+    }
+
     .dot {
       display: block;
       float: left;
@@ -80,22 +111,62 @@
       color: #212529;
       margin-top: 7px;
     }
-    
+
     .string {
       display: block;
       font-size: 14px;
       margin-left: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding-left: 5px;
+      &.no__stretch {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+      }
     }
-  
-    &:hover {
-      color: white;
-      background-color: #209cee;
-  
-      .dot {
-        color: #fff;
+    
+    .delete__btn {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      background-color: #ce9898;
+      &:hover {
+        background-color: #a83232;
+      }
+      &:active {
+        transform: scale(.9);
+      }
+    }
+
+    .done {
+      text-decoration: line-through !important;
+    }
+  }
+  .add__todo {
+    display: flex;
+    justify-content: space-between;
+    margin: 1px 0;
+    & > * {
+      all: unset;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    & > input {
+      width: 79%;
+      padding: 0 6px;
+      font-size: 12px;
+      background-color: #fff;
+      border: 1px solid #000;
+    }
+    & > button {
+      width: 20%;
+      font-size: 12px;
+      text-align: center;
+      font-weight: bold;
+      background-color: rgb(224, 224, 31);
+
+      &:active {
+        transform: scale(.9);
       }
     }
   }

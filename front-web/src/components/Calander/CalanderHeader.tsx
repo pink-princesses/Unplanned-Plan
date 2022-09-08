@@ -1,5 +1,3 @@
-import React, { useContext } from 'react';
-import { drawerContext } from '../../contexts/drawerContext';
 import '../../styles/CalanderHeader.scss';
 
 function CalanderHeader({
@@ -8,7 +6,6 @@ function CalanderHeader({
   setShowYear,
   setShowMonth,
 }: Props) {
-  const { closeTodoState } = useContext(drawerContext);
   const changeCalander = (dir: string) => {
     switch (dir) {
       case 'prev':

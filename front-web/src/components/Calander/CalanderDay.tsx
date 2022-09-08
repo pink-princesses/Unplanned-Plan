@@ -1,26 +1,28 @@
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 
-import { drawerContext } from '../../contexts/drawerContext';
 import { todoType } from '../../types';
-import { updateTodo } from '../../api/requests';
+import { createTodo, deleteTodo, updateTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
 import '../../styles/CalanderDay.scss';
+import { debounce } from 'lodash';
 
 let targetDate = '';
 
-function CalanderDay({ date, todos, thisMonth }: Props) {
-  const year = Number(date.slice(0, 4));
-  const month = Number(date.slice(4, 6));
-  const day = Number(date.slice(6));
-
-  const MONTH = useMemo(() => new Date().getMonth() + 1, []);
-  const DAY = useMemo(() => new Date().getDate(), []);
+function CalanderDay({ date, todos }: Props) {
+  const HEGHTLIGHT = useMemo(() => {
+    return (
+      new Date().getMonth() + 1 === Number(date.slice(4, 6)) &&
+      new Date().getDate() === Number(date.slice(6))
+    );
+  }, []);
   const DONE_COUNT = useMemo(
     () => todos.filter((todo) => todo.done === false).length,
     [todos],
   );
 
-  const { openTodoState } = useContext(drawerContext);
+  const [stretch, setStretch] = useState(false);
+  const [moving, setMoving] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   const { updateTodos } = useContext(todosContext);
 
   const busyChecker = useCallback(() => {
@@ -30,6 +32,16 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
     else return '';
   }, [todos]);
 
+  const makefilteredTodoList = useCallback(
+    (isNeed: boolean) => {
+      if (isNeed) return todos.filter((t) => t.done !== true).slice(0, 7);
+      else return todos;
+    },
+    [todos],
+  );
+
+  const toggleStretch = (state: boolean) => setStretch(state);
+
   const dropHandler = async (id: number, content: string, done: boolean) => {
     try {
       await updateTodo(id, content, done, targetDate);
@@ -37,6 +49,49 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
       targetDate = '';
     } catch (error) {
       alert('일정 변경에 실패했습니다');
+    } finally {
+      setMoving(false);
+    }
+  };
+
+  const changeHandler = (newValue: string) => setInputValue(newValue);
+
+  const addBtnClickHandler = async () => {
+    if (!inputValue) {
+      alert('올바른 todo를 입력해주세요');
+      return;
+    }
+
+    try {
+      await createTodo(inputValue, false, date);
+      await updateTodos();
+    } catch (error) {
+      alert('추가하지 못했습니다');
+    }
+    setInputValue('');
+  };
+
+  const todoClickHandler = debounce(
+    async (id: number, content: string, done: boolean, inputDate: string) => {
+      try {
+        await updateTodo(id, content, done, inputDate);
+        await updateTodos();
+      } catch (error) {
+        alert('완료 처리를 하지 못했습니다');
+      }
+    },
+    500,
+  );
+
+  const deleteBtnClickhandler = async (id: number) => {
+    const res = confirm('todo를 삭제합니다');
+    if (res) {
+      try {
+        await deleteTodo(id);
+        await updateTodos();
+      } catch (error) {
+        alert('삭제하지 못했습니다');
+      }
     }
   };
 
@@ -53,56 +108,74 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
       onDragEnter={(e) => dragHandler(e)}
       onDragOver={(e) => e.preventDefault()}
     >
-      <div
-        className={
-          thisMonth.toString().padStart(2, '0') === date.slice(4, 6)
-            ? ''
-            : 'unhighlight'
-        }
-      >
+      <div className={`flexable_box ${stretch ? 'stretch' : ''}`}>
         <div className="calander__days__top">
-          <div>
-            <span
-              className={DAY === day && MONTH === month ? 'day__highlight' : ''}
-            >
-              {day}
+          <span>
+            <span className={HEGHTLIGHT ? 'highlight' : ''}>
+              {Number(date.slice(6))}
             </span>
             <span className="day__status">{busyChecker()}</span>
-          </div>
+          </span>
           <span
-            className={
-              DONE_COUNT > 7
-                ? 'sell_btn nes-btn is-primary'
-                : 'sell_btn nes-btn'
-            }
-            onClick={() => {
-              openTodoState({ year, month, day });
-            }}
+            className={`nes-btn sell_btn ${DONE_COUNT > 7 ? 'is-primary' : ''}`}
+            onClick={() => toggleStretch(!stretch)}
           >
-            +
+            {stretch ? '-' : '+'}
           </span>
         </div>
-      </div>
-      <ul className={`contents ${date}`}>
-        {todos.length >= 1
-          ? todos
-              .filter((t) => t.done !== true)
-              .slice(0, 7)
-              .map((todo) => (
-                <li
-                  draggable="true"
-                  className={todo.done ? 'content done' : 'content'}
-                  key={todo.id}
-                  onDragEnd={() =>
-                    dropHandler(todo.id, todo.content, todo.done)
-                  }
-                >
-                  <span className="dot"></span>
-                  <span className="string">{todo.content}</span>
-                </li>
+        <ul className={`contents ${date}`}>
+          {todos.length >= 1
+            ? makefilteredTodoList(!stretch).map((todo) => (
+                <>
+                  <li className="item" key={todo.id}>
+                    <span
+                      className="content"
+                      draggable="true"
+                      onDragEnd={() =>
+                        dropHandler(todo.id, todo.content, todo.done)
+                      }
+                      onMouseUp={() =>
+                        todoClickHandler(
+                          todo.id,
+                          todo.content,
+                          !todo.done,
+                          todo.date,
+                        )
+                      }
+                    >
+                      <span className="dot"></span>
+                      <span
+                        className={`string ${todo.done ? ' done' : ''} ${
+                          !stretch ? 'no__stretch' : ''
+                        }`}
+                      >
+                        {todo.content}
+                      </span>
+                    </span>
+                    {stretch && (
+                      <button
+                        className="delete__btn"
+                        onClick={() => deleteBtnClickhandler(todo.id)}
+                      >
+                        x
+                      </button>
+                    )}
+                  </li>
+                </>
               ))
-          : null}
-      </ul>
+            : null}
+          {stretch && (
+            <div className="add__todo">
+              <input
+                value={inputValue}
+                onChange={(e) => changeHandler(e.target.value)}
+                type="text"
+              />
+              <button onClick={addBtnClickHandler}>추가</button>
+            </div>
+          )}
+        </ul>
+      </div>
     </div>
   );
 }
@@ -112,5 +185,4 @@ export default CalanderDay;
 interface Props {
   date: string;
   todos: todoType[];
-  thisMonth: number;
 }
