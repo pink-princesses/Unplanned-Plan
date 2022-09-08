@@ -35,18 +35,18 @@ function Calander() {
 
   return (
     <div className="calander">
-      <div className="calander__container">
-        <CalanderHeader
-          showYear={showYear}
-          showMonth={showMonth}
-          setShowYear={setShowYear}
-          setShowMonth={setShowMonth}
-        />
-        <CalanderContents thisMonth={showMonth} />
-      </div>
-      <div className={todoState ? 'calander__todo' : 'calander__todo hide'}>
+      {/* <div className="calander__container"> */}
+      <CalanderHeader
+        showYear={showYear}
+        showMonth={showMonth}
+        setShowYear={setShowYear}
+        setShowMonth={setShowMonth}
+      />
+      <CalanderContents thisMonth={showMonth} />
+      {/* </div> */}
+      {/* <div className={todoState ? 'calander__todo' : 'calander__todo hide'}>
         <Todo />
-      </div>
+      </div> */}
     </div>
   );
 }

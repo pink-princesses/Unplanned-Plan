@@ -74,8 +74,8 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
           <span
             className={
               DONE_COUNT > 2
-                ? 'calander__addbtn nes-btn is-primary'
-                : 'calander__addbtn nes-btn'
+                ? 'sell_btn nes-btn is-primary'
+                : 'sell_btn nes-btn'
             }
             onClick={() => {
               openTodoState({ year, month, day });
@@ -85,7 +85,7 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
           </span>
         </div>
       </div>
-      <ul className={`calander__days__btn ${date}`}>
+      <ul className={`contents ${date}`}>
         {todos.length >= 1
           ? todos
               .filter((t) => t.done !== true)
@@ -93,14 +93,14 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
               .map((todo, idx) => (
                 <li
                   draggable="true"
-                  className={todo.done ? 'todoContent done' : 'todoContent'}
+                  className={todo.done ? 'content done' : 'content'}
                   key={todo.id}
                   onDragEnd={() =>
                     dropHandler(todo.id, todo.content, todo.done)
                   }
                 >
                   <span className="dot"></span>
-                  <span className="contents">{todo.content}</span>
+                  <span className="string">{todo.content}</span>
                 </li>
               ))
           : null}

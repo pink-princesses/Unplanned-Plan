@@ -1,35 +1,35 @@
 .calander__days__wrapper {
   display: flex;
   flex-wrap: wrap;
+  padding: 0 10px;
 }
 .calander__days {
   box-sizing: border-box;
   width: calc(100% / 7);
-  height: 152px;
+  height: 200px;
   text-align: right;
-  padding: 12px;
-  padding-top: 6px;
+  padding: 4px;
   border-top: 4px solid black;
   border-left: 4px solid black;
   display: flex;
   flex-direction: column;
   background-color: white;
-}
 
-.calander__days:nth-child(n + 29) {
-  border-bottom: 4px solid black;
-}
-.calander__days:nth-child(n + 36) {
-  border-top: 0;
-}
-.calander__days:nth-child(7n) {
-  background-color: #f5f5f5;
-  border-right: 4px solid black;
-  color: rgba(0, 0, 0, 0.4);
-}
-.calander__days:nth-child(7n + 1) {
-  background-color: #f5f5f5;
-  color: rgba(0, 0, 0, 0.4);
+  &:nth-child(n + 29) {
+    border-bottom: 4px solid black;
+  }
+  &:nth-child(n + 36) {
+    border-top: 0;
+  }
+  &:nth-child(7n) {
+    background-color: #f5f5f5;
+    border-right: 4px solid black;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  &:nth-child(7n + 1) {
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.4);
+  }
 }
 
 .calander__days__top {
@@ -48,47 +48,8 @@
     margin-left: 8px;
   }
 }
-.calander__days__btn {
-  display: flex;
-  flex-direction: column;
-}
 
-.todoContent {
-  margin: 1px 0;
-  text-align: left;
-  border-image-repeat: stretch;
-  .dot {
-    display: block;
-    float: left;
-    width: 1px;
-    height: 1px;
-    box-shadow: 4px 1px, 5px 1px, 3px 2px, 4px 2px, 5px 2px, 6px 2px, 2px 3px,
-    3px 3px, 4px 3px, 5px 3px, 6px 3px, 7px 3px, 2px 4px, 3px 4px, 4px 4px,
-    5px 4px, 6px 4px, 7px 4px, 3px 5px, 4px 5px, 5px 5px, 6px 5px,
-    4px 6px, 5px 6px;
-    color: #212529;
-    margin-top: 8px;
-  }
-  
-  .contents {
-    display: block;
-    margin-left: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &:hover {
-    color: white;
-    background-color: #209cee;
-
-    .dot {
-      color: #fff;
-    }
-  }
-}
-
-.calander__addbtn {
+.sell_btn {
   max-height: 22px;
   line-height: 10px;
   text-align: center;
@@ -96,6 +57,46 @@
   padding: 0px;
   border-image-repeat: stretch;
 }
-.calander__addbtn:hover {
+.sell_btn:hover {
   color: #000;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  .content {
+    margin: 1px 0;
+    text-align: left;
+    border-image-repeat: stretch;
+    .dot {
+      display: block;
+      float: left;
+      width: 1px;
+      height: 1px;
+      box-shadow: 4px 1px, 5px 1px, 3px 2px, 4px 2px, 5px 2px, 6px 2px, 2px 3px,
+      3px 3px, 4px 3px, 5px 3px, 6px 3px, 7px 3px, 2px 4px, 3px 4px, 4px 4px,
+      5px 4px, 6px 4px, 7px 4px, 3px 5px, 4px 5px, 5px 5px, 6px 5px,
+      4px 6px, 5px 6px;
+      color: #212529;
+      margin-top: 7px;
+    }
+    
+    .string {
+      display: block;
+      font-size: 14px;
+      margin-left: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  
+    &:hover {
+      color: white;
+      background-color: #209cee;
+  
+      .dot {
+        color: #fff;
+      }
+    }
+  }
 }

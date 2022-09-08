@@ -3,16 +3,18 @@
   display: flex;
   width: 100%;
   margin-top: 10px;
+  padding: 0 10px;
 }
 .calander__dayOfWeek__days {
   flex: 1;
   text-align: right;
   padding-right: 10px;
   padding-bottom: 10px;
+  &:nth-child(1) {
+    color: red;
+  }
+  &:nth-child(7) {
+    color: blue;
+  }
 }
-.calander__dayOfWeek__days:nth-child(1) {
-  color: red;
-}
-.calander__dayOfWeek__days:nth-child(7) {
-  color: blue;
-}
+
