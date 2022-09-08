@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 
 import { drawerContext } from '../../contexts/drawerContext';
 import { todoType } from '../../types';
@@ -15,7 +15,6 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
 
   const MONTH = useMemo(() => new Date().getMonth() + 1, []);
   const DAY = useMemo(() => new Date().getDate(), []);
-  const DAY_STATUS = useMemo(() => ['🤯BUSY', '😵CRIZY', '👿HELL'], []);
   const DONE_COUNT = useMemo(
     () => todos.filter((todo) => todo.done === false).length,
     [todos],
@@ -23,6 +22,13 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
 
   const { openTodoState } = useContext(drawerContext);
   const { updateTodos } = useContext(todosContext);
+
+  const busyChecker = useCallback(() => {
+    if (DONE_COUNT > 7) return '🤯BUSY';
+    else if (DONE_COUNT > 10) return '😵CRIZY';
+    else if (DONE_COUNT > 13) return '👿HELL';
+    else return '';
+  }, [todos]);
 
   const dropHandler = async (id: number, content: string, done: boolean) => {
     try {
@@ -61,19 +67,11 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
             >
               {day}
             </span>
-            <span className="day__status">
-              {DONE_COUNT >= 10
-                ? DAY_STATUS[2]
-                : 10 > DONE_COUNT && DONE_COUNT >= 6
-                ? DAY_STATUS[1]
-                : 6 > DONE_COUNT && DONE_COUNT > 3
-                ? DAY_STATUS[0]
-                : ''}
-            </span>
+            <span className="day__status">{busyChecker()}</span>
           </div>
           <span
             className={
-              DONE_COUNT > 2
+              DONE_COUNT > 7
                 ? 'sell_btn nes-btn is-primary'
                 : 'sell_btn nes-btn'
             }
@@ -89,8 +87,8 @@ function CalanderDay({ date, todos, thisMonth }: Props) {
         {todos.length >= 1
           ? todos
               .filter((t) => t.done !== true)
-              .slice(0, 4)
-              .map((todo, idx) => (
+              .slice(0, 7)
+              .map((todo) => (
                 <li
                   draggable="true"
                   className={todo.done ? 'content done' : 'content'}
