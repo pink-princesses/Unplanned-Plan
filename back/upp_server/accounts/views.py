@@ -10,7 +10,7 @@ from django.views.decorators.http import require_http_methods
 import env
 from .functions import *
 from messages import AM000, AM005
-from utils import generate_expiration_date, make_json_response,     check_jwt_token
+from utils import make_json_response, check_jwt_token
 
 # Create your views here.
 def google_login(request):
@@ -36,36 +36,18 @@ def google_login(request):
 				'type': 'jwt',
 				'name': user_name, 
 				'email': user_email, 
-				'expiration_time': generate_expiration_date(1)
 		}, env.JWT_PRIVATE_KEY, algorithm=env.ALGORITHM)
 
-		refresh_token = jwt.encode({
-				'type': 'refresh',
-				'name': user_name, 
-				'email': user_email, 
-				'expiration_time': generate_expiration_date(30)
-		}, env.JWT_PRIVATE_KEY, algorithm=env.ALGORITHM)
 
-		params = urlencode({'jwt': jwt_token, 'refresh': refresh_token})
+		params = urlencode({'jwt': jwt_token})
 
 		return HttpResponseRedirect(f'{env.BASE_URL}/login?{params}')
-
-
-@require_http_methods(["POST"])
-def refresh_login_status(request):
-		token = request.headers.get('refresh')
-		result =     check_jwt_token(token)
-
-		if result.get('status'):
-				return make_json_response({'data': result})
-		else:
-				return make_json_response({'data': result}, code=401)
 
 
 @require_http_methods(["GET", "POST"])
 def get_user_info(request):
 		token = request.headers.get('jwt')
-		result =     check_jwt_token(token)
+		result =  check_jwt_token(token)
 
 		if type(result) == int or result.get('status'):
 				User = get_user_model()
@@ -85,3 +67,12 @@ def get_user_info(request):
 				return make_json_response({'data': result}, 401)
 
 
+# @require_http_methods(["POST"])
+# def refresh_login_status(request):
+# 		token = request.headers.get('refresh')
+# 		result = check_jwt_token(token)
+
+# 		if result.get('status'):
+# 				return make_json_response({'data': result})
+# 		else:
+# 				return make_json_response({'data': result}, code=401)

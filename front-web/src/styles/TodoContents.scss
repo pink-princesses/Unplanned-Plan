@@ -1,0 +1,23 @@
+.todos__contents {
+	position: relative;
+	margin-bottom: 16px !important;
+	padding-top: 16px;
+	padding-bottom: 10px;
+	border-image-repeat: stretch;
+
+	.todos__delBtn {
+		position: absolute;
+		top: 0;
+		right: 5px;
+		font-weight: 700;
+	}
+	.todos__delBtn:hover {
+		color: red;
+	}
+	.todo__content {
+		word-break: break-all;
+	}
+}
+.todos__contents:hover {
+	background-color: rgba($color: #000000, $alpha: 0.1);
+}

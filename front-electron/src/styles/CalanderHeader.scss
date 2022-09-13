@@ -1,0 +1,21 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: gray;
+  padding: 0 10px;
+}
+.btns {
+  display: flex;
+  
+  .btn {
+    line-height: 15px;
+  } 
+
+  .prev,
+  .next {
+    padding: 0 4px;
+    margin-left: 8px;
+  }
+}

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import './App.module.scss';
 import 'nes.css/css/nes.min.css';
@@ -13,14 +13,14 @@ import './App.module.scss';
 function App() {
   return (
     <TodosProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Intro />} />
           <Route path="/login" element={<Login />} />
           <Route path="/personalSettings" element={<PersonalSettings />} />
           <Route path="/calander" element={<Calander />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </TodosProvider>
   );
 }

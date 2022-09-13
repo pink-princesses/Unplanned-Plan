@@ -1,0 +1,202 @@
+* {
+  box-sizing: border-box;
+}
+.show {
+  display: block !important;
+}
+.hide {
+  display: hide !important;
+}
+
+.done {
+  text-decoration: line-through !important;
+}
+
+.grabbing {
+  background-color: pink !important;
+  cursor: move;
+}
+
+.unhighlight {
+  opacity: 0.2 !important;
+}
+
+.calander {
+  position: relative;
+  padding: 60px;
+  padding-top: 20px;
+  display: flex;
+  box-sizing: border-box;
+  height: 937px;
+}
+
+.calander__container {
+  width: 100%;
+  flex: 3.5;
+
+  .calander__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .calander__header__title {
+    font-size: 4.5vh;
+  }
+  .calander__header__btn__wrapper {
+    display: flex;
+    height: 40px;
+  }
+  .calander__header__btn {
+    line-height: 15px;
+  }
+  .btn__prev {
+    flex: 1;
+    padding: 0 10px;
+    margin-right: 8px;
+  }
+  .btn__next {
+    flex: 1;
+    padding: 0 10px;
+  }
+  .calander__header__btn {
+    line-height: 15px;
+  }
+  .btn__prev {
+    flex: 1;
+    padding: 0 10px;
+    margin-right: 8px;
+  }
+  .btn__next {
+    flex: 1;
+    padding: 0 10px;
+  }
+
+  .calander__dayOfWeek__wrapper {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    // border: 1px solid blue;
+  }
+  .calander__dayOfWeek__days {
+    flex: 1;
+    text-align: right;
+    padding-right: 10px;
+    padding-bottom: 10px;
+  }
+  .calander__dayOfWeek__days:nth-child(1) {
+    // color: rgba(0, 0, 0, 0.2);
+    color: red;
+  }
+  .calander__dayOfWeek__days:nth-child(7) {
+    // color: rgba(0, 0, 0, 0.2);
+    color: blue;
+  }
+
+  .calander__days__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    // border: 1px solid red;
+  }
+  .calander__days {
+    box-sizing: border-box;
+    width: calc(100% / 7);
+    height: 152px;
+    text-align: right;
+    padding: 12px;
+    padding-top: 6px;
+    border-top: 4px solid black;
+    border-left: 4px solid black;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+  }
+  .calander__days:nth-child(n + 29) {
+    border-bottom: 4px solid black;
+  }
+  .calander__days:nth-child(n + 36) {
+    border-top: 0;
+  }
+  .calander__days:nth-child(7n) {
+    background-color: #f5f5f5;
+    border-right: 4px solid black;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  .calander__days:nth-child(7n + 1) {
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  .calander__days__top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+
+    .day__highlight {
+      box-sizing: border-box;
+      color: #fff;
+      background-color: red;
+      border-radius: 100%;
+      padding: 2px 4.5px;
+    }
+    .day__status {
+      margin-left: 8px;
+    }
+  }
+  .sell {
+    display: flex;
+    flex-direction: column;
+  }
+  .todoContent {
+    margin: 1px 0;
+    text-align: left;
+    border-image-repeat: stretch;
+    .dot {
+      display: block;
+      float: left;
+      width: 1px;
+      height: 1px;
+      box-shadow: 4px 1px, 5px 1px, 3px 2px, 4px 2px, 5px 2px, 6px 2px, 2px 3px,
+      3px 3px, 4px 3px, 5px 3px, 6px 3px, 7px 3px, 2px 4px, 3px 4px, 4px 4px,
+      5px 4px, 6px 4px, 7px 4px, 3px 5px, 4px 5px, 5px 5px, 6px 5px,
+      4px 6px, 5px 6px;
+      color: #212529;
+      margin-top: 8px;
+    }
+    
+    .contents {
+      display: block;
+      margin-left: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:hover {
+      color: white;
+      background-color: #209cee;
+
+      .dot {
+        color: #fff;
+      }
+    }
+  }
+
+  .sell_btn {
+    max-height: 22px;
+    line-height: 10px;
+    text-align: center;
+    color: #000;
+    padding: 0px;
+    border-image-repeat: stretch;
+  }
+  .sell_btn:hover {
+    color: #000;
+  }
+  
+}
+
+.calander__todo {
+  flex: 1;
+}
