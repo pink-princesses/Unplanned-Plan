@@ -1,0 +1,56 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+.todo_done {
+  opacity: 0.3;
+  text-decoration: line-through;
+}
+
+.todos__todos h1 {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.todos__container {
+  width: 22rem;
+  margin-left: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  scrollbar-width: none;
+
+  .header__date {
+    margin-bottom: 10px;
+  }
+
+  .todos__input {
+    display: flex;
+    margin-bottom: 20px;
+    flex: 1;
+    max-height: 50px;
+
+    .input__form {
+      flex: 2.5;
+    }
+    .submit__btn {
+      flex: 1;
+      margin-left: 10px;
+    }
+  }
+  .todos__todos {
+    flex: 8;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  .togle_todo_btn {
+    width: 4rem;
+    height: 2rem;
+    line-height: .8rem;
+    opacity: 0.5;
+  }
+  .togle_todo_btn:hover {
+    opacity: 1;
+  }
+}
