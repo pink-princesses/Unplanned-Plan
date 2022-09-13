@@ -26,9 +26,9 @@ function CalanderDay({ date, todos }: Props) {
   const { updateTodos } = useContext(todosContext);
 
   const busyChecker = useCallback(() => {
-    if (DONE_COUNT > 7) return '🤯BUSY';
+    if (DONE_COUNT > 13) return '👿HELL';
     else if (DONE_COUNT > 10) return '😵CRIZY';
-    else if (DONE_COUNT > 13) return '👿HELL';
+    else if (DONE_COUNT > 7) return '🤯BUSY';
     else return '';
   }, [todos]);
 
@@ -73,6 +73,8 @@ function CalanderDay({ date, todos }: Props) {
 
   const todoClickHandler = debounce(
     async (id: number, content: string, done: boolean, inputDate: string) => {
+      if (!stretch) return;
+
       try {
         await updateTodo(id, content, done, inputDate);
         await updateTodos();
@@ -124,6 +126,16 @@ function CalanderDay({ date, todos }: Props) {
           </span>
         </div>
         <ul className={`contents ${date}`}>
+          {stretch && (
+            <div className="add__todo">
+              <input
+                value={inputValue}
+                onChange={(e) => changeHandler(e.target.value)}
+                type="text"
+              />
+              <button onClick={addBtnClickHandler}>추가</button>
+            </div>
+          )}
           {todos.length >= 1
             ? makefilteredTodoList(!stretch).map((todo) => (
                 <>
@@ -164,16 +176,6 @@ function CalanderDay({ date, todos }: Props) {
                 </>
               ))
             : null}
-          {stretch && (
-            <div className="add__todo">
-              <input
-                value={inputValue}
-                onChange={(e) => changeHandler(e.target.value)}
-                type="text"
-              />
-              <button onClick={addBtnClickHandler}>추가</button>
-            </div>
-          )}
         </ul>
       </div>
     </div>

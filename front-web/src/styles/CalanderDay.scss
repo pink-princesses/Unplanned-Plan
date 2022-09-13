@@ -27,10 +27,13 @@
     width: 100%;
     padding: 4px;
     z-index: 100;
-
+    
     &.stretch {
       width: 150%;
+      min-width: 400px;
       min-height: 300px;
+      max-height: 250px;
+      overflow-y: scroll;
       top: -50px;
       right: -50px;
       z-index: 1000;
