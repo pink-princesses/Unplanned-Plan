@@ -13,8 +13,8 @@
 ---
 [바탕화면 캘린더](https://www.desktopcal.com/kor/)에 몇 가지 기능을 추가한 캘린더입니다.
 <br />
-[Unplanned-plan 사용해보기(웹 버전)](http://unplanned-plan.shop)
-[베타 버전 다운로드](https://github.com/pink-princesses/Unplanned-Plan/releases/tag/v0.2.0)
+[Unplanned-plan 사용해보기(웹 버전)](http://unplanned-plan.shop)<br />
+[베타 버전 다운로드](https://github.com/pink-princesses/Unplanned-Plan/releases/tag/v0.2.0)<br />
 
 <br /><br />
 
