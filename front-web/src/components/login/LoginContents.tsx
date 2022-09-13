@@ -10,11 +10,9 @@ export default function LoginContents() {
   useEffect(() => {
     const params = new URLSearchParams(search);
     const jwt = params.get('jwt');
-    const refresh = params.get('refresh');
 
-    if (jwt && refresh) {
+    if (jwt) {
       localStorage.setItem('jwt', jwt);
-      localStorage.setItem('refresh', refresh);
 
       navigate('/calander');
     } else {

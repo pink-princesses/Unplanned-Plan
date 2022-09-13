@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import CalanderDay from './CalanderDay';
 
 import { todosContext } from '../../contexts/todosContext';
-import './Calander.scss';
+import '../../styles/CalanderContents.scss';
 
 function CalanderContents({ thisMonth }: Props) {
   const dayOftheWeek = ['일', '월', '화', '수', '목', '금', '토'];
@@ -22,12 +22,7 @@ function CalanderContents({ thisMonth }: Props) {
         {dayList.map(
           (date) =>
             todos[date] && (
-              <CalanderDay
-                key={date}
-                date={date}
-                todos={todos[date]}
-                thisMonth={thisMonth}
-              />
+              <CalanderDay key={date} date={date} todos={todos[date]} />
             ),
         )}
       </div>

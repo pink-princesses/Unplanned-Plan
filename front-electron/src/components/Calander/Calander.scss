@@ -144,7 +144,7 @@
       margin-left: 8px;
     }
   }
-  .calander__days__btn {
+  .sell {
     display: flex;
     flex-direction: column;
   }
@@ -183,7 +183,7 @@
     }
   }
 
-  .calander__addbtn {
+  .sell_btn {
     max-height: 22px;
     line-height: 10px;
     text-align: center;
@@ -191,7 +191,7 @@
     padding: 0px;
     border-image-repeat: stretch;
   }
-  .calander__addbtn:hover {
+  .sell_btn:hover {
     color: #000;
   }
   

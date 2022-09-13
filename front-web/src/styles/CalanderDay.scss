@@ -1,0 +1,173 @@
+.calander__days {
+  position: relative;
+  width: calc(100% / 7);
+  height: 200px;
+  border-top: 4px solid black;
+  border-left: 4px solid black;
+  box-sizing: border-box;
+  
+  &:nth-child(n + 29) {
+    border-bottom: 4px solid black;
+  }
+  &:nth-child(n + 36) {
+    border-top: 0;
+  }
+  &:nth-child(7n) {
+    background-color: #f5f5f5;
+    border-right: 4px solid black;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  &:nth-child(7n + 1) {
+    background-color: #f5f5f5;
+    color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .flexable_box {
+    position: absolute;
+    width: 100%;
+    padding: 4px;
+    z-index: 100;
+
+    &.stretch {
+      width: 150%;
+      min-height: 300px;
+      top: -50px;
+      right: -50px;
+      z-index: 1000;
+      background-color: #fff;
+      border: 5px solid #000;
+    }
+
+    &.moving {
+      opacity: .1;
+    }
+  }
+}
+
+.calander__days__top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+
+  .highlight {
+    box-sizing: border-box;
+    color: #fff;
+    background-color: red;
+    border-radius: 100%;
+    padding: 2px 4.5px;
+  }
+  .day__status {
+    margin-left: 8px;
+  }
+}
+
+.sell_btn {
+  max-height: 22px;
+  line-height: 10px;
+  text-align: center;
+  color: #000;
+  padding: 0px;
+  border-image-repeat: stretch;
+}
+.sell_btn:hover {
+  color: #000;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  .item {
+    display: flex;
+    justify-content: space-between;
+    margin: 1px 0;
+    text-align: left;
+    border-image-repeat: stretch;
+
+    & > * {
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .content {
+      width: 97%;
+      margin-right: 5px;
+      background-color: #cde0e6;
+      &:hover {
+        color: white;
+        background-color: #209cee;
+      }
+    }
+
+    .dot {
+      display: block;
+      float: left;
+      width: 1px;
+      height: 1px;
+      box-shadow: 4px 1px, 5px 1px, 3px 2px, 4px 2px, 5px 2px, 6px 2px, 2px 3px,
+      3px 3px, 4px 3px, 5px 3px, 6px 3px, 7px 3px, 2px 4px, 3px 4px, 4px 4px,
+      5px 4px, 6px 4px, 7px 4px, 3px 5px, 4px 5px, 5px 5px, 6px 5px,
+      4px 6px, 5px 6px;
+      color: #212529;
+      margin-top: 7px;
+    }
+
+    .string {
+      display: block;
+      font-size: 14px;
+      margin-left: 14px;
+      padding-left: 5px;
+      &.no__stretch {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+      }
+    }
+    
+    .delete__btn {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      background-color: #ce9898;
+      &:hover {
+        background-color: #a83232;
+      }
+      &:active {
+        transform: scale(.9);
+      }
+    }
+
+    .done {
+      text-decoration: line-through !important;
+    }
+  }
+  .add__todo {
+    display: flex;
+    justify-content: space-between;
+    margin: 1px 0;
+    & > * {
+      all: unset;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    & > input {
+      width: 79%;
+      padding: 0 6px;
+      font-size: 12px;
+      background-color: #fff;
+      border: 1px solid #000;
+    }
+    & > button {
+      width: 20%;
+      font-size: 12px;
+      text-align: center;
+      font-weight: bold;
+      background-color: rgb(224, 224, 31);
+
+      &:active {
+        transform: scale(.9);
+      }
+    }
+  }
+}

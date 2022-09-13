@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from messages import *
-from utils import make_json_response, check_jwt_token, check_exist_empty_token
+from utils import make_json_response, check_exist_empty_token
 from .models import Todo
 from .serializers import TodoSerializer
 
@@ -9,9 +9,8 @@ from .serializers import TodoSerializer
 @api_view(['GET'])
 def index(request):
     jwt_token = request.headers.get('jwt')
-    refresh_token = request.headers.get('refresh')
 
-    result = check_exist_empty_token(jwt_token, refresh_token)
+    result = check_exist_empty_token(jwt_token)
     if result == AM001 or result == AM003 or result == AM005:
         return make_json_response(result, 403)
     
@@ -24,9 +23,8 @@ def index(request):
 
 def get_todos(request, first_date, last_date):
     jwt_token = request.headers.get('jwt')
-    refresh_token = request.headers.get('refresh')
 
-    result = check_exist_empty_token(jwt_token, refresh_token)
+    result = check_exist_empty_token(jwt_token)
     if result == AM001 or result == AM003 or result == AM005:
         return make_json_response(result, 403)
     
@@ -49,9 +47,8 @@ def detail(request, todo_pk):
 @api_view(['POST'])
 def create(request):
     jwt_token = request.headers.get('jwt')
-    refresh_token = request.headers.get('refresh')
 
-    result = check_exist_empty_token(jwt_token, refresh_token)
+    result = check_exist_empty_token(jwt_token)
     if result == AM001 or result == AM003 or result == AM005:
         return make_json_response(result, 403)
     
@@ -66,9 +63,8 @@ def create(request):
 @api_view(['GET'])
 def detail(request, todo_pk):
     jwt_token = request.headers.get('jwt')
-    refresh_token = request.headers.get('refresh')
 
-    result = check_exist_empty_token(jwt_token, refresh_token)
+    result = check_exist_empty_token(jwt_token)
     if result == AM001 or result == AM003 or result == AM005:
         return make_json_response(result, 403)
         
@@ -82,9 +78,8 @@ def detail(request, todo_pk):
 @api_view(['PUT'])
 def update(request, todo_pk):
     jwt_token = request.headers.get('jwt')
-    refresh_token = request.headers.get('refresh')
 
-    result = check_exist_empty_token(jwt_token, refresh_token)
+    result = check_exist_empty_token(jwt_token)
     if result == AM001 or result == AM003 or result == AM005:
         return make_json_response(result, 403)
 
@@ -103,9 +98,8 @@ def update(request, todo_pk):
 @api_view(['DELETE'])
 def delete(request, todo_pk):
     jwt_token = request.headers.get('jwt')
-    refresh_token = request.headers.get('refresh')
 
-    result = check_exist_empty_token(jwt_token, refresh_token)
+    result = check_exist_empty_token(jwt_token)
     if result == AM001 or result == AM003 or result == AM005:
         return make_json_response(result, 403)
   
