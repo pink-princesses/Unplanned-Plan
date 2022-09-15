@@ -3,19 +3,48 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 10px;
-  font-weight: bold;
+  padding: 8px 10px 0 10px;
+
+  .header__date {
+    margin-bottom: 0;
+    font-size: 20px;
+  }
 }
 .btns {
   display: flex;
-  
+
   .btn {
     line-height: 15px;
-  } 
+  }
 
   .prev,
   .next {
     padding: 0 4px;
     margin-left: 8px;
+  }
+}
+
+.lefts {
+  width: 39px;
+  padding: 0 6px 2px 4px;
+
+  button {
+    font-size: 24px;
+    transition: 0.2s;
+  }
+  button:hover {
+    transform: scale(1.2);
+  }
+  button:focus {
+    border: none;
+    outline: none;
+  }
+  .logout {
+    margin-right: 4px;
+  }
+  .customer {
+    margin-right: 3px;
+  }
+  .dark {
   }
 }

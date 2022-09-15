@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import '../../styles/CalanderHeader.scss';
+import Tooltip from '../common/Tooltip';
 
 function CalanderHeader({
   showYear,
@@ -6,6 +8,7 @@ function CalanderHeader({
   setShowYear,
   setShowMonth,
 }: Props) {
+  const [isDark, setIsDark] = useState(false);
   const changeCalander = (dir: string) => {
     switch (dir) {
       case 'prev':
@@ -27,9 +30,20 @@ function CalanderHeader({
     }
   };
 
+  const handleDarkMode = () => {
+    setIsDark(!isDark);
+  };
+
   return (
     <div className="header">
-      <h1>
+      <div className="btns lefts">
+        <button className="btn logout">✅</button>
+        <button className="btn customer">📞</button>
+        <button className="btn dark" onClick={handleDarkMode}>
+          {isDark ? '🌜' : '🌞'}
+        </button>
+      </div>
+      <h1 className="header__date">
         {showYear}년 {showMonth}월
       </h1>
       <div className="btns">
