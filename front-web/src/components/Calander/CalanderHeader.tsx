@@ -37,11 +37,20 @@ function CalanderHeader({
   return (
     <div className="header">
       <div className="btns lefts">
-        <button className="btn logout">✅</button>
-        <button className="btn customer">📞</button>
-        <button className="btn dark" onClick={handleDarkMode}>
-          {isDark ? '🌜' : '🌞'}
-        </button>
+        <Tooltip direction="left" message="로그아웃">
+          <button className="btn logout">✅</button>
+        </Tooltip>
+        <Tooltip direction="left" message="고객센터">
+          <button className="btn customer">📞</button>
+        </Tooltip>
+        <Tooltip
+          direction="left"
+          message={isDark ? '라이트모드로' : '다크모드로'}
+        >
+          <button className="btn dark" onClick={handleDarkMode}>
+            {isDark ? '🌜' : '🌞'}
+          </button>
+        </Tooltip>
       </div>
       <h1 className="header__date">
         {showYear}년 {showMonth}월
