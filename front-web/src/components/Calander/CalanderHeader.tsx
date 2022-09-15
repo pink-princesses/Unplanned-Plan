@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/CalanderHeader.scss';
 import Tooltip from '../common/Tooltip';
 
@@ -8,6 +9,7 @@ function CalanderHeader({
   setShowYear,
   setShowMonth,
 }: Props) {
+  const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
   const changeCalander = (dir: string) => {
     switch (dir) {
@@ -34,6 +36,10 @@ function CalanderHeader({
     setIsDark(!isDark);
   };
 
+  const handleCustomer = () => {
+    navigate('/customer');
+  };
+
   return (
     <div className="header">
       <div className="btns lefts">
@@ -41,7 +47,9 @@ function CalanderHeader({
           <button className="btn logout">✅</button>
         </Tooltip>
         <Tooltip direction="left" message="고객센터">
-          <button className="btn customer">📞</button>
+          <button className="btn customer" onClick={handleCustomer}>
+            📞
+          </button>
         </Tooltip>
         <Tooltip
           direction="left"

@@ -6,6 +6,7 @@ import Intro from './pages/Intro';
 import Calander from './pages/Calander';
 import Login from './pages/Login';
 import PersonalSettings from './pages/PersonalSettings';
+import Customer from './pages/Customer';
 import TodosProvider from './contexts/todosContext';
 
 import './App.module.scss';
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/personalSettings" element={<PersonalSettings />} />
           <Route path="/calander" element={<Calander />} />
+          <Route path="/customer" element={<Customer />} />
         </Routes>
       </BrowserRouter>
     </TodosProvider>
