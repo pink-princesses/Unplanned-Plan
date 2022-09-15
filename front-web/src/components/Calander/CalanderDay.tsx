@@ -164,9 +164,15 @@ function CalanderDay({ date, todos }: Props) {
                 value={inputValue}
                 onChange={(e) => changeHandler(e.target.value)}
                 onKeyDownCapture={enterBtnHandler}
+                className="nes-input"
                 type="text"
               />
-              <button onClick={addBtnClickHandler}>추가</button>
+              <button
+                onClick={addBtnClickHandler}
+                className="nes-btn is-primary"
+              >
+                추가
+              </button>
             </div>
           )}
           {todos.length >= 1
