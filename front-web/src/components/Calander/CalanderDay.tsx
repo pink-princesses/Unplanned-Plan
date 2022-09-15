@@ -83,6 +83,11 @@ function CalanderDay({ date, todos }: Props) {
 
   const changeHandler = (newValue: string) => setInputValue(newValue);
 
+  const enterBtnHandler = (e: any) => {
+    if (e.key === 'Enter') {
+      addBtnClickHandler();
+    }
+  };
   const addBtnClickHandler = async () => {
     if (!inputValue) {
       alert('올바른 todo를 입력해주세요');
@@ -158,6 +163,7 @@ function CalanderDay({ date, todos }: Props) {
               <input
                 value={inputValue}
                 onChange={(e) => changeHandler(e.target.value)}
+                onKeyDownCapture={enterBtnHandler}
                 type="text"
               />
               <button onClick={addBtnClickHandler}>추가</button>
