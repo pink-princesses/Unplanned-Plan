@@ -51,14 +51,14 @@ function CalanderHeader({
             📞
           </button>
         </Tooltip>
-        <Tooltip
+        {/* <Tooltip
           direction="left"
           message={isDark ? '라이트모드로' : '다크모드로'}
         >
           <button className="btn dark" onClick={handleDarkMode}>
             {isDark ? '🌜' : '🌞'}
           </button>
-        </Tooltip>
+        </Tooltip> */}
       </div>
       <h1 className="header__date">
         {showYear}년 {showMonth}월
