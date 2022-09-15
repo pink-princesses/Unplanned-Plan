@@ -113,14 +113,11 @@ function CalanderDay({ date, todos }: Props) {
   );
 
   const deleteBtnClickhandler = async (id: number) => {
-    const res = confirm('todo를 삭제합니다');
-    if (res) {
-      try {
-        await deleteTodo(id);
-        await updateTodos();
-      } catch (error) {
-        alert('삭제하지 못했습니다');
-      }
+    try {
+      await deleteTodo(id);
+      await updateTodos();
+    } catch (error) {
+      alert('삭제하지 못했습니다');
     }
   };
 
