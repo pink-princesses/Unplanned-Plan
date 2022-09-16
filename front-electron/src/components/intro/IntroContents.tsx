@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { openGoogleLoginPage } from '../../utils';
 
 import './IntroContents.scss';
@@ -9,7 +9,12 @@ export default function IntroContents() {
   const clickHandler = useCallback(openGoogleLoginPage, []);
 
   useEffect(() => {
-    if (localStorage.getItem('jwt')) navigate('/calander');
+    const paramStr = window.location.href;
+    const jwt = paramStr?.split('?')[1]?.split('=')[1];
+    if (jwt) {
+      if (jwt.length > 10) localStorage.setItem('jwt', jwt);
+      if (localStorage.getItem('jwt')) navigate('/calander');
+    }
   }, []);
 
   return (
