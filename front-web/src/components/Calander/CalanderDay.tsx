@@ -1,10 +1,10 @@
 import { useCallback, useContext, useMemo, useState } from 'react';
+import { debounce } from 'lodash';
 
 import { todoType } from '../../types';
 import { createTodo, deleteTodo, updateTodo } from '../../api/requests';
 import { todosContext } from '../../contexts/todosContext';
 import '../../styles/CalanderDay.scss';
-import { debounce } from 'lodash';
 
 let targetDate = '';
 
@@ -20,15 +20,15 @@ function CalanderDay({ date, todos }: Props) {
     [todos],
   );
 
-  const [stretch, setStretch] = useState(false);
+  const [stretch, setStretch] = useState(0);
   const [moving, setMoving] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const { updateTodos } = useContext(todosContext);
 
   const busyChecker = useCallback(() => {
-    if (DONE_COUNT > 7) return '🤯BUSY';
+    if (DONE_COUNT > 13) return '👿HELL';
     else if (DONE_COUNT > 10) return '😵CRIZY';
-    else if (DONE_COUNT > 13) return '👿HELL';
+    else if (DONE_COUNT > 7) return '🤯BUSY';
     else return '';
   }, [todos]);
 
@@ -40,7 +40,34 @@ function CalanderDay({ date, todos }: Props) {
     [todos],
   );
 
-  const toggleStretch = (state: boolean) => setStretch(state);
+  const toggleStretch = (e: React.MouseEvent) => {
+    const pointX = window.innerWidth / 2 - e.pageX;
+    const pointY = window.innerHeight / 2 - e.pageY;
+
+    let stretch_pivot = 0;
+    if (stretch == 0) {
+      if (pointX > 0 && pointY > 0) stretch_pivot = 1;
+      else if (pointX < 0 && pointY > 0) stretch_pivot = 2;
+      else if (pointX > 0 && pointY < 0) stretch_pivot = 3;
+      else if (pointX < 0 && pointY < 0) stretch_pivot = 4;
+    }
+    setStretch(stretch_pivot);
+  };
+
+  const setStretchDirection = () => {
+    switch (stretch) {
+      case 1:
+        return { top: '-7px', left: '-7px' };
+      case 2:
+        return { top: '-7px', right: '-7px' };
+      case 3:
+        return { bottom: '-7px', left: '-7px' };
+      case 4:
+        return { bottom: '-7px', right: '-7px' };
+      default:
+        return;
+    }
+  };
 
   const dropHandler = async (id: number, content: string, done: boolean) => {
     try {
@@ -73,6 +100,8 @@ function CalanderDay({ date, todos }: Props) {
 
   const todoClickHandler = debounce(
     async (id: number, content: string, done: boolean, inputDate: string) => {
+      if (stretch == 0) return;
+
       try {
         await updateTodo(id, content, done, inputDate);
         await updateTodos();
@@ -108,7 +137,10 @@ function CalanderDay({ date, todos }: Props) {
       onDragEnter={(e) => dragHandler(e)}
       onDragOver={(e) => e.preventDefault()}
     >
-      <div className={`flexable_box ${stretch ? 'stretch' : ''}`}>
+      <div
+        className={`flexable_box ${stretch > 0 ? 'stretch' : ''}`}
+        style={setStretchDirection()}
+      >
         <div className="calander__days__top">
           <span>
             <span className={HEGHTLIGHT ? 'highlight' : ''}>
@@ -116,16 +148,26 @@ function CalanderDay({ date, todos }: Props) {
             </span>
             <span className="day__status">{busyChecker()}</span>
           </span>
-          <span
+          <button
             className={`nes-btn sell_btn ${DONE_COUNT > 7 ? 'is-primary' : ''}`}
-            onClick={() => toggleStretch(!stretch)}
+            onClick={(e) => toggleStretch(e)}
           >
-            {stretch ? '-' : '+'}
-          </span>
+            {stretch > 0 ? '-' : '+'}
+          </button>
         </div>
         <ul className={`contents ${date}`}>
+          {stretch > 0 && (
+            <div className="add__todo">
+              <input
+                value={inputValue}
+                onChange={(e) => changeHandler(e.target.value)}
+                type="text"
+              />
+              <button onClick={addBtnClickHandler}>추가</button>
+            </div>
+          )}
           {todos.length >= 1
-            ? makefilteredTodoList(!stretch).map((todo) => (
+            ? makefilteredTodoList(stretch == 0).map((todo) => (
                 <>
                   <li className="item" key={todo.id}>
                     <span
@@ -146,13 +188,13 @@ function CalanderDay({ date, todos }: Props) {
                       <span className="dot"></span>
                       <span
                         className={`string ${todo.done ? ' done' : ''} ${
-                          !stretch ? 'no__stretch' : ''
+                          stretch == 0 ? 'no__stretch' : ''
                         }`}
                       >
                         {todo.content}
                       </span>
                     </span>
-                    {stretch && (
+                    {stretch > 0 && (
                       <button
                         className="delete__btn"
                         onClick={() => deleteBtnClickhandler(todo.id)}
@@ -164,16 +206,6 @@ function CalanderDay({ date, todos }: Props) {
                 </>
               ))
             : null}
-          {stretch && (
-            <div className="add__todo">
-              <input
-                value={inputValue}
-                onChange={(e) => changeHandler(e.target.value)}
-                type="text"
-              />
-              <button onClick={addBtnClickHandler}>추가</button>
-            </div>
-          )}
         </ul>
       </div>
     </div>
