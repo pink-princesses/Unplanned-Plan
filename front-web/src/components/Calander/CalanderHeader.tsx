@@ -40,11 +40,18 @@ function CalanderHeader({
     navigate('/customer');
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+
   return (
     <div className="header">
       <div className="btns lefts">
         <Tooltip direction="left" message="로그아웃">
-          <button className="btn logout">✅</button>
+          <button className="btn logout" onClick={handleLogout}>
+            ✅
+          </button>
         </Tooltip>
         <Tooltip direction="left" message="고객센터">
           <button className="btn customer" onClick={handleCustomer}>
