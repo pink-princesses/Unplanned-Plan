@@ -76,4 +76,20 @@ async function deleteTodo(todo_pk) {
   return await api.delete(`api/todos/delete/${todo_pk}`);
 }
 
-export { getAllTodos, getTodos, createTodo, updateTodo, deleteTodo };
+/**
+ * 고객센터 건의사항 작성
+ * @param {string} content 투두 내용
+ * @returns void
+ */
+async function submitCustomer(content) {
+  return await api.post(`api/todos/customer`, { content: content });
+}
+
+export {
+  getAllTodos,
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  submitCustomer,
+};

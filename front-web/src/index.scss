@@ -3,6 +3,25 @@ body {
   font-family: 'Galmuri9' !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  // -ms-overflow-style: none; /* IE and Edge */
+  // scrollbar-width: none; /* Firefox */
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  // display: none; /* Chrome, Safari, Opera*/
+  transition: 1s;
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  background: black;
+  background-clip: padding-box;
 }
 
 code {

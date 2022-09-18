@@ -75,7 +75,7 @@ function CalanderDay({ date, todos }: Props) {
       await updateTodos();
       targetDate = '';
     } catch (error) {
-      alert('일정 변경에 실패했습니다');
+      alert('일정 변경에 실패했습니다. 잠시 후에 다시 시도해 주세요.');
     } finally {
       setMoving(false);
     }
@@ -83,6 +83,11 @@ function CalanderDay({ date, todos }: Props) {
 
   const changeHandler = (newValue: string) => setInputValue(newValue);
 
+  const enterBtnHandler = (e: any) => {
+    if (e.key === 'Enter') {
+      addBtnClickHandler();
+    }
+  };
   const addBtnClickHandler = async () => {
     if (!inputValue) {
       alert('올바른 todo를 입력해주세요');
@@ -93,7 +98,7 @@ function CalanderDay({ date, todos }: Props) {
       await createTodo(inputValue, false, date);
       await updateTodos();
     } catch (error) {
-      alert('추가하지 못했습니다');
+      alert('추가하지 못했습니다. 잠시 후에 다시 시도해 주세요.');
     }
     setInputValue('');
   };
@@ -106,21 +111,18 @@ function CalanderDay({ date, todos }: Props) {
         await updateTodo(id, content, done, inputDate);
         await updateTodos();
       } catch (error) {
-        alert('완료 처리를 하지 못했습니다');
+        alert('완료 처리를 하지 못했습니다. 잠시 후에 다시 시도해 주세요.');
       }
     },
     500,
   );
 
   const deleteBtnClickhandler = async (id: number) => {
-    const res = confirm('todo를 삭제합니다');
-    if (res) {
-      try {
-        await deleteTodo(id);
-        await updateTodos();
-      } catch (error) {
-        alert('삭제하지 못했습니다');
-      }
+    try {
+      await deleteTodo(id);
+      await updateTodos();
+    } catch (error) {
+      alert('삭제하지 못했습니다. 잠시 후에 다시 시도해 주세요.');
     }
   };
 
@@ -161,9 +163,16 @@ function CalanderDay({ date, todos }: Props) {
               <input
                 value={inputValue}
                 onChange={(e) => changeHandler(e.target.value)}
+                onKeyDownCapture={enterBtnHandler}
+                className="nes-input"
                 type="text"
               />
-              <button onClick={addBtnClickHandler}>추가</button>
+              <button
+                onClick={addBtnClickHandler}
+                className="nes-btn is-primary"
+              >
+                추가
+              </button>
             </div>
           )}
           {todos.length >= 1

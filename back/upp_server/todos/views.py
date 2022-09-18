@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from messages import *
 from utils import make_json_response, check_exist_empty_token
-from .models import Todo
-from .serializers import TodoSerializer
+from .models import Todo, Customer
+from .serializers import CustomerSerializer, TodoSerializer
 
 
 @api_view(['GET'])
@@ -112,3 +112,24 @@ def delete(request, todo_pk):
         }
         return make_json_response({'result': data, 'message': TM001})
     return make_json_response({'data': TM002}, 403)
+
+
+@api_view(['GET', 'POST'])
+def customer(request):
+    jwt_token = request.headers.get('jwt')
+
+    result = check_exist_empty_token(jwt_token)
+    if result == AM001 or result == AM003 or result == AM005:
+        return make_json_response(result, 403)
+    
+    if request.method == 'POST':
+        userInfo = result.get('user_id')
+        serializer = CustomerSerializer(data={'user':userInfo, 'content': request.data['content']})
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return make_json_response(TM000, 200)
+    else:
+        customers = Customer.objects.all()
+        result = TM002
+        result['data'] = CustomerSerializer(customers, many=True).data
+        return make_json_response(result, 200)
