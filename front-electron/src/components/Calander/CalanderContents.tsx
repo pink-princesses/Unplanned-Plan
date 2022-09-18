@@ -20,7 +20,7 @@ function CalanderContents({ thisMonth }: Props) {
       </div>
       <div className="calander__days__wrapper">
         {dayList.map(
-          (date) =>
+          (date, idx) =>
             todos[date] && (
               <CalanderDay key={date} date={date} todos={todos[date]} />
             ),
