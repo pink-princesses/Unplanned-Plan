@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import './App.module.scss';
 import 'nes.css/css/nes.min.css';
@@ -13,14 +13,25 @@ import './App.module.scss';
 function App() {
   return (
     <TodosProvider>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Intro />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/personalSettings" element={<PersonalSettings />} />
-          <Route path="/calander" element={<Calander />} />
-        </Routes>
-      </HashRouter>
+      {process.env.REACT_APP_PRODUCTION ? (
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Intro />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/personalSettings" element={<PersonalSettings />} />
+            <Route path="/calander" element={<Calander />} />
+          </Routes>
+        </HashRouter>
+      ) : (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Intro />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/personalSettings" element={<PersonalSettings />} />
+            <Route path="/calander" element={<Calander />} />
+          </Routes>
+        </BrowserRouter>
+      )}
     </TodosProvider>
   );
 }
