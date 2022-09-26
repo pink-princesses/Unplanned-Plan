@@ -38,7 +38,7 @@ function Calander() {
         setShowYear={setShowYear}
         setShowMonth={setShowMonth}
       />
-      <CalanderContents thisMonth={showMonth} />
+      <CalanderContents />
     </div>
   );
 }

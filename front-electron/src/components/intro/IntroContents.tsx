@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { openGoogleLoginPage } from '../../utils';
 
 import './IntroContents.scss';
