@@ -13,7 +13,6 @@ export default function LoginContents() {
 
     if (jwt) {
       localStorage.setItem('jwt', jwt);
-
       navigate('/calander');
     } else {
       alert('로그인 할 수 없습니다.');

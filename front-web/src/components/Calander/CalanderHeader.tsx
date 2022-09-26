@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/CalanderHeader.scss';
+import Tooltip from '../common/Tooltip';
 
 function CalanderHeader({
   showYear,
@@ -6,6 +9,8 @@ function CalanderHeader({
   setShowYear,
   setShowMonth,
 }: Props) {
+  const navigate = useNavigate();
+  const [isDark, setIsDark] = useState(false);
   const changeCalander = (dir: string) => {
     switch (dir) {
       case 'prev':
@@ -27,9 +32,42 @@ function CalanderHeader({
     }
   };
 
+  const handleDarkMode = () => {
+    setIsDark(!isDark);
+  };
+
+  const handleCustomer = () => {
+    navigate('/customer');
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+
   return (
     <div className="header">
-      <h1>
+      <div className="btns lefts">
+        <Tooltip direction="left" message="로그아웃">
+          <button className="btn logout" onClick={handleLogout}>
+            ✅
+          </button>
+        </Tooltip>
+        <Tooltip direction="left" message="고객센터">
+          <button className="btn customer" onClick={handleCustomer}>
+            📞
+          </button>
+        </Tooltip>
+        {/* <Tooltip
+          direction="left"
+          message={isDark ? '라이트모드로' : '다크모드로'}
+        >
+          <button className="btn dark" onClick={handleDarkMode}>
+            {isDark ? '🌜' : '🌞'}
+          </button>
+        </Tooltip> */}
+      </div>
+      <h1 className="header__date">
         {showYear}년 {showMonth}월
       </h1>
       <div className="btns">

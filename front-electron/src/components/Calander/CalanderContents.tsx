@@ -5,7 +5,7 @@ import CalanderDay from './CalanderDay';
 import { todosContext } from '../../contexts/todosContext';
 import '../../styles/CalanderContents.scss';
 
-function CalanderContents({ thisMonth }: Props) {
+function CalanderContents() {
   const dayOftheWeek = ['일', '월', '화', '수', '목', '금', '토'];
   const { todos, dayList } = useContext(todosContext);
 
@@ -31,7 +31,3 @@ function CalanderContents({ thisMonth }: Props) {
 }
 
 export default CalanderContents;
-
-interface Props {
-  thisMonth: number;
-}

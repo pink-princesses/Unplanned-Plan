@@ -5,7 +5,7 @@
   border-top: 4px solid black;
   border-left: 4px solid black;
   box-sizing: border-box;
-  
+
   &:nth-child(n + 29) {
     border-bottom: 4px solid black;
   }
@@ -21,25 +21,36 @@
     background-color: #f5f5f5;
     color: rgba(0, 0, 0, 0.4);
   }
-  
+
   .flexable_box {
     position: absolute;
     width: 100%;
-    padding: 4px;
+    padding: 6px;
     z-index: 100;
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 10rem;
+    }
 
     &.stretch {
       width: 150%;
+      min-width: 400px;
       min-height: 300px;
-      top: -50px;
-      right: -50px;
+      max-height: 250px;
+      overflow-y: scroll;
+      word-break: break-all;
       z-index: 1000;
       background-color: #fff;
-      border: 5px solid #000;
+      border: 4px solid #000;
+      li > span {
+        margin-right: 5px;
+      }
+      padding: 10px 4px 10px 12px;
     }
 
     &.moving {
-      opacity: .1;
+      opacity: 0.1;
     }
   }
 }
@@ -85,13 +96,12 @@
     border-image-repeat: stretch;
 
     & > * {
-      border-radius: 4px;
+      // border-radius: 4px;
       box-sizing: border-box;
     }
 
     .content {
-      width: 97%;
-      margin-right: 5px;
+      width: 100%;
       background-color: #cde0e6;
       &:hover {
         color: white;
@@ -105,9 +115,9 @@
       width: 1px;
       height: 1px;
       box-shadow: 4px 1px, 5px 1px, 3px 2px, 4px 2px, 5px 2px, 6px 2px, 2px 3px,
-      3px 3px, 4px 3px, 5px 3px, 6px 3px, 7px 3px, 2px 4px, 3px 4px, 4px 4px,
-      5px 4px, 6px 4px, 7px 4px, 3px 5px, 4px 5px, 5px 5px, 6px 5px,
-      4px 6px, 5px 6px;
+        3px 3px, 4px 3px, 5px 3px, 6px 3px, 7px 3px, 2px 4px, 3px 4px, 4px 4px,
+        5px 4px, 6px 4px, 7px 4px, 3px 5px, 4px 5px, 5px 5px, 6px 5px, 4px 6px,
+        5px 6px;
       color: #212529;
       margin-top: 7px;
     }
@@ -120,10 +130,10 @@
       &.no__stretch {
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis; 
+        text-overflow: ellipsis;
       }
     }
-    
+
     .delete__btn {
       width: 20px;
       height: 20px;
@@ -134,7 +144,7 @@
         background-color: #a83232;
       }
       &:active {
-        transform: scale(.9);
+        transform: scale(0.9);
       }
     }
 
@@ -146,27 +156,28 @@
     display: flex;
     justify-content: space-between;
     margin: 1px 0;
+    margin-bottom: 6px;
+
     & > * {
-      all: unset;
-      border-radius: 5px;
       box-sizing: border-box;
     }
     & > input {
-      width: 79%;
+      width: 76%;
       padding: 0 6px;
-      font-size: 12px;
+      font-size: 14px;
       background-color: #fff;
-      border: 1px solid #000;
+    }
+    & > input:focus {
+      outline: none;
     }
     & > button {
-      width: 20%;
-      font-size: 12px;
+      width: 19%;
+      font-size: 14px;
       text-align: center;
-      font-weight: bold;
-      background-color: rgb(224, 224, 31);
+      padding: 0;
 
       &:active {
-        transform: scale(.9);
+        transform: scale(0.9);
       }
     }
   }

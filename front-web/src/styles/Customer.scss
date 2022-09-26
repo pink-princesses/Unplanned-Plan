@@ -1,0 +1,49 @@
+.customer__container {
+  margin: 0 auto;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    flex: 1;
+  }
+  textarea:focus {
+    outline: none;
+  }
+
+  label {
+    margin-top: 6px;
+  }
+  label span {
+    float: right;
+  }
+
+  .btns {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 25px;
+  }
+
+  .btns > button {
+    max-width: 300px;
+  }
+  .btns > button:first-child {
+    margin-bottom: 15px;
+  }
+}
