@@ -3,7 +3,7 @@ FROM node:16.13.1-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm list | grep node-sass
+RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
 RUN npm install
 
 COPY . .
