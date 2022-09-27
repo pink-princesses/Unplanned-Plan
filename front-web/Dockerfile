@@ -3,8 +3,6 @@ FROM node:16.13.1-alpine
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm uninstall node-sass
-RUN npm install node-sass
 RUN npm install
 
 COPY . .
